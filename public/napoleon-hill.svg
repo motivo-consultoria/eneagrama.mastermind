@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="napoleonBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#3A3F47"/>
+      <stop offset="60%" stop-color="#1E2228"/>
+      <stop offset="100%" stop-color="#111317"/>
+    </radialGradient>
+    <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22262C"/>
+      <stop offset="100%" stop-color="#0E1013"/>
+    </linearGradient>
+    <linearGradient id="tieGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#B91C1C"/>
+      <stop offset="100%" stop-color="#7F1D1D"/>
+    </linearGradient>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FDDEC9"/>
+      <stop offset="50%" stop-color="#F7C8A8"/>
+      <stop offset="100%" stop-color="#E5A882"/>
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E5E7EB"/>
+      <stop offset="50%" stop-color="#D1D5DB"/>
+      <stop offset="100%" stop-color="#9CA3AF"/>
+    </linearGradient>
+    <filter id="subtleGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Badge Background -->
+  <circle cx="100" cy="100" r="98" fill="url(#napoleonBg)" stroke="#C5A059" stroke-width="2.5"/>
+
+  <!-- Inner Golden Ring (MasterMind Napoleon Hill Heritage) -->
+  <circle cx="100" cy="100" r="92" fill="none" stroke="#E6C687" stroke-width="0.75" opacity="0.6" stroke-dasharray="3 2"/>
+
+  <!-- Group with subtle drop shadow -->
+  <g filter="url(#subtleGlow)">
+    <!-- Classic Executive Suit Coat (Dark Charcoal) -->
+    <path d="M 30 200 C 35 155, 55 145, 78 142 L 100 162 L 122 142 C 145 145, 165 155, 170 200 Z" fill="url(#suitGrad)"/>
+    
+    <!-- Lapels -->
+    <path d="M 68 144 L 86 178 L 94 152 Z" fill="#2D333B"/>
+    <path d="M 132 144 L 114 178 L 106 152 Z" fill="#2D333B"/>
+
+    <!-- Crisp White Collar Shirt -->
+    <polygon points="86,140 100,165 114,140 100,146" fill="#FFFFFF"/>
+    <polygon points="82,140 96,156 88,158" fill="#F3F4F6"/>
+    <polygon points="118,140 104,156 112,158" fill="#E5E7EB"/>
+
+    <!-- MasterMind Crimson Tie with Dimple -->
+    <polygon points="97,152 103,152 105,188 100,195 95,188" fill="url(#tieGrad)"/>
+    <polygon points="98,150 102,150 104,158 96,158" fill="#991B1B"/>
+
+    <!-- Neck -->
+    <path d="M 88 120 L 88 145 L 112 145 L 112 120 Z" fill="#E5A882"/>
+
+    <!-- Napoleon Hill Distinguished Face & Jaw -->
+    <!-- Jawline & Head Structure -->
+    <path d="M 68 85 
+             C 68 55, 132 55, 132 85 
+             C 132 115, 122 134, 100 135 
+             C 78 134, 68 115, 68 85 Z" 
+          fill="url(#skinGrad)"/>
+
+    <!-- Distinguished Silver / White Hair & Sideburns -->
+    <path d="M 66 84 
+             C 64 62, 74 42, 100 42 
+             C 126 42, 136 62, 134 84 
+             C 132 68, 126 50, 100 50 
+             C 74 50, 68 68, 66 84 Z" 
+          fill="url(#hairGrad)"/>
+    <!-- Left Side Part & Hair Waves -->
+    <path d="M 65 75 C 64 62, 72 48, 88 44 C 74 50, 68 62, 67 80 Z" fill="#FFFFFF" opacity="0.8"/>
+    <path d="M 135 75 C 136 62, 128 48, 112 44 C 126 50, 132 62, 133 80 Z" fill="#D1D5DB"/>
+
+    <!-- Ears -->
+    <path d="M 66 85 C 63 80, 64 96, 68 98 Z" fill="#E5A882"/>
+    <path d="M 134 85 C 137 80, 136 96, 132 98 Z" fill="#E5A882"/>
+
+    <!-- Brow Lines -->
+    <path d="M 76 74 Q 85 71 93 75" stroke="#9CA3AF" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M 124 74 Q 115 71 107 75" stroke="#9CA3AF" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+    <!-- Distinguished Classic Round Wire Glasses (Napoleon Hill Signature Look) -->
+    <!-- Left Lens -->
+    <circle cx="84" cy="83" r="10" fill="#FFFFFF" fill-opacity="0.25" stroke="#C5A059" stroke-width="1.8"/>
+    <circle cx="84" cy="83" r="8.5" fill="none" stroke="#4B5563" stroke-width="0.5"/>
+    <!-- Right Lens -->
+    <circle cx="116" cy="83" r="10" fill="#FFFFFF" fill-opacity="0.25" stroke="#C5A059" stroke-width="1.8"/>
+    <circle cx="116" cy="83" r="8.5" fill="none" stroke="#4B5563" stroke-width="0.5"/>
+    <!-- Bridge & Temples -->
+    <path d="M 94 82 Q 100 79 106 82" stroke="#C5A059" stroke-width="1.8" fill="none"/>
+    <line x1="68" y1="82" x2="74" y2="83" stroke="#C5A059" stroke-width="1.5"/>
+    <line x1="126" y1="83" x2="132" y2="82" stroke="#C5A059" stroke-width="1.5"/>
+
+    <!-- Eyes (Wise, focused gaze) -->
+    <circle cx="84" cy="83" r="2.5" fill="#27272A"/>
+    <circle cx="85" cy="82" r="0.8" fill="#FFFFFF"/>
+    <circle cx="116" cy="83" r="2.5" fill="#27272A"/>
+    <circle cx="117" cy="82" r="0.8" fill="#FFFFFF"/>
+
+    <!-- Nose (Refined, Executive) -->
+    <path d="M 100 78 L 98 97 L 103 97" stroke="#D08D64" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Serene & Wise Smile of Mentorship -->
+    <path d="M 90 110 Q 100 116 110 110" stroke="#9E4D38" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M 94 118 Q 100 120 106 118" stroke="#D08D64" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+    <!-- Subtle Wisdom Character Lines -->
+    <path d="M 75 88 Q 78 94 80 97" stroke="#E5A882" stroke-width="1" fill="none" opacity="0.6"/>
+    <path d="M 125 88 Q 122 94 120 97" stroke="#E5A882" stroke-width="1" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- Small MasterMind Gold Star / Emblem at Bottom -->
+  <g transform="translate(100, 188) scale(0.6)">
+    <circle cx="0" cy="0" r="10" fill="#B91C1C" stroke="#E6C687" stroke-width="1.5"/>
+    <text x="0" y="4" font-family="-apple-system, sans-serif" font-size="11" font-weight="900" fill="#FFFFFF" text-anchor="middle">M</text>
+  </g>
+</svg>

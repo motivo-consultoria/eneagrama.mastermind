@@ -1,0 +1,6 @@
+{
+  "name": "Mentor Eneagrama MasterMind",
+  "description": "Mentor Virtual de Liderança de alta performance baseado no Eneagrama Sistêmico e Metodologia MasterMind / Napoleon Hill.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
