@@ -27,7 +27,7 @@ export const EnneagramGuideModal: React.FC<EnneagramGuideModalProps> = ({
           <div className="flex items-center gap-2.5">
             <BookOpen className="w-5 h-5 text-red-600" />
             <h3 className="text-lg font-bold text-neutral-900">
-              Guia dos 9 Padrões Master do Eneagrama
+              Guia dos 9 Padrões-Master do Eneagrama
             </h3>
           </div>
           <button
@@ -70,7 +70,7 @@ export const EnneagramGuideModal: React.FC<EnneagramGuideModalProps> = ({
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded-full bg-red-100 text-red-800 border border-red-200 text-xs font-bold">
-                  Padrão Master {currentType.id}
+                  Padrão-Master {currentType.id}
                 </span>
                 <h4 className="text-xl font-extrabold text-neutral-900 font-executive">
                   {currentType.name}
@@ -173,7 +173,7 @@ export const EnneagramGuideModal: React.FC<EnneagramGuideModalProps> = ({
                 }}
                 className="w-full sm:w-auto px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-xs shadow-xs transition-all cursor-pointer"
               >
-                Usar Tipo {currentType.id} no Chat
+                Usar Padrão {currentType.id} no Chat
               </button>
             )}
             <button

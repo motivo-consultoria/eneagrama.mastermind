@@ -106,7 +106,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-neutral-50 text-neutral-800 font-medium border border-neutral-200 shadow-2xs transition-colors cursor-pointer"
         >
           <BookOpen className="w-4 h-4 text-amber-600" />
-          <span>Consultar os 9 Padrões do Eneagrama</span>
+          <span>Consultar os 9 Padrões-Master</span>
         </button>
 
         <div className="flex items-center gap-2 text-center sm:text-right">

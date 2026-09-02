@@ -363,8 +363,8 @@ export const PILLARS: Record<string, PillarConfig> = {
     title: "Assistente de Feedback Estratégico",
     subtitle: "Condução de conversas difíceis, alinhamento executivo e influência sem defensiva",
     badge: "Pilar 1",
-    initialMessage: "Olá, líder. Sou Napoleon Hill, seu mentor MasterMind. Vamos estruturar uma conversa de feedback cirúrgica e de alto impacto.\n\nPara iniciarmos com precisão, **qual é o seu Eneatipo (ou o padrão em que você mais se reconhece)?**\n*Selecione uma das opções abaixo:*",
-    description: "Estruture abordagens cirúrgicas baseadas nos gatilhos e virtudes dos eneatipos envolvidos para obter engajamento imediato.",
+    initialMessage: "Olá, líder. Sou Napoleon Hill, seu mentor MasterMind. Vamos estruturar uma conversa de feedback cirúrgica e de alto impacto.\n\nPara iniciarmos com precisão, **qual é o seu Padrão-Master (ou o padrão em que você mais se reconhece)?**\n*Selecione uma das opções abaixo:*",
+    description: "Estruture abordagens cirúrgicas baseadas nos gatilhos e virtudes dos Padrões-Master envolvidos para obter engajamento imediato.",
     accentColor: "from-amber-600 to-yellow-600"
   },
   sos: {
@@ -372,7 +372,7 @@ export const PILLARS: Record<string, PillarConfig> = {
     title: "SOS Inteligência Emocional",
     subtitle: "Auto-gestão imediata, domínio próprio e resgate do eixo em situações de crise",
     badge: "Pilar 2",
-    initialMessage: "Olá, líder. Sou Napoleon Hill. Diante de momentos de estresse e pressão, o domínio de si mesmo é o primeiro passo para o comando executivo.\n\nPara identificarmos o gatilho exato ativado, **qual é o seu Eneatipo?**\n*Selecione uma das opções abaixo:*",
+    initialMessage: "Olá, líder. Sou Napoleon Hill. Diante de momentos de estresse e pressão, o domínio de si mesmo é o primeiro passo para o comando executivo.\n\nPara identificarmos o gatilho exato ativado, **qual é o seu Padrão-Master?**\n*Selecione uma das opções abaixo:*",
     description: "Identifique o vício emocional ativado pelo estresse e aplique 2 ações práticas imediatas para acessar sua virtude.",
     accentColor: "from-red-700 to-rose-600"
   },
@@ -381,8 +381,8 @@ export const PILLARS: Record<string, PillarConfig> = {
     title: "Bússola Diária de Virtudes",
     subtitle: "Foco diário de alta performance, sabedoria MasterMind e desafio prático de 24h",
     badge: "Pilar 3",
-    initialMessage: "Olá, líder. Sou Napoleon Hill. O sucesso diário depende de colocar a sua virtude mestra a serviço dos seus maiores objetivos.\n\nPara calibrarmos sua bússola diária, **qual é o seu Eneatipo?**\n*Selecione uma das opções abaixo:*",
-    description: "Cruze seu desafio diário com a virtude mestra do seu eneatipo e receba uma diretriz prática para as próximas 24 horas.",
+    initialMessage: "Olá, líder. Sou Napoleon Hill. O sucesso diário depende de colocar a sua virtude mestra a serviço dos seus maiores objetivos.\n\nPara calibrarmos sua bússola diária, **qual é o seu Padrão-Master?**\n*Selecione uma das opções abaixo:*",
+    description: "Cruze seu desafio diário com a virtude mestra do seu Padrão-Master e receba uma diretriz prática para as próximas 24 horas.",
     accentColor: "from-amber-500 to-red-600"
   }
 };
