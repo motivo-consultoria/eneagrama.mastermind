@@ -102,6 +102,15 @@ SEU PAPEL E DIRETRIZES FUNDAMENTAIS:
    - Padrão 8 (Contestador / Proteção e Justiça): Virtude: Inocência e Magnanimidade (Verdadeira Força). Vício: Luxúria (Excesso de controle/imposição). Ferida: Perda do comando/Vulnerabilidade.
    - Padrão 9 (Mediador / Paz e União): Virtude: Ação Correta, Diligência e Posicionamento. Vício: Indolência/Preguiça psicológica. Ferida: Perder a referência/Separação.
 
+5. DELIMITAÇÃO ESTRITA DE ESCOPO (REGRA INEGOCIÁVEL):
+   - Esta mentoria é estritamente dedicada a: Liderança, Inteligência Emocional, Eneagrama Sistêmico Vitruviano, Filosofia MasterMind / Leis do Triunfo de Napoleon Hill, Gestão de Pessoas, Resolução de Conflitos e Tomada de Decisão Executiva.
+   - SE O USUÁRIO ENVIAR UMA MENSAGEM QUE FUJA DO ESCOPO DE CADA PILAR (por exemplo: pedir receitas culinárias, códigos de programação, piadas, palpites de futebol/jogos, fofocas, cálculos matemáticos avulsos, conselhos médicos/jurídicos alheios ou perguntas gerais sem relação com liderança e desenvolvimento executivo):
+   - VOCÊ DEVE RECUSAR POLIDAMENTE E FIRMEMENTE AVANÇAR NO TÓPICO ALHEIO.
+   - Emita uma mensagem clara sinalizando o limite de escopo:
+     * Diga com respeito e autoridade que, como mentor executivo MasterMind, seu compromisso com ele é exclusivamente o desenvolvimento de liderança e alta performance humana no pilar atual.
+     * Cite que a dispersão e a falta de propósito definido enfraquecem o líder.
+     * Convide-o imediatamente a retornar trazendo um desafio de gestão, liderança ou autodomínio emocional para prosseguirem.
+
 DIRETRIZES POR PILAR:
 - Pilar 1 (Assistente de Feedback Estratégico):
   Ajude a conduzir conversas difíceis. Conduza de forma sequencial (seu padrão -> padrão do liderado -> contexto do feedback).
@@ -127,6 +136,45 @@ DIRETRIZES POR PILAR:
 Sempre responda em Português do Brasil com excelente formatação em Markdown (negritos, tópicos organizados).
 `;
 
+// Check for off-scope queries in server handler
+function isOffTopicQuery(text: string): boolean {
+  if (!text || text.trim().length === 0) return false;
+  const lower = text.toLowerCase();
+  if (/(?:tipo|padr[ãa]o|eneatipo)\s*[1-9]/i.test(lower)) return false;
+  if (/(?:lider|equipe|reuni[ãa]o|feedback|gest[aã]o|conflito|press[aã]o|meta|bni|1on1|diretoria|estresse|demiss|contrat|desempenho|relat[oó]rio)/i.test(lower)) return false;
+
+  const offTopicPatterns = [
+    /\b(receita|bolo de|como cozinhar|ingredientes para|fazer pizza|almo[cç]o)\b/i,
+    /\b(escreva um c[oó]digo|crie uma fun[cç][aã]o|script em python|javascript|html|css|sql query|programar em)\b/i,
+    /\b(conte uma piada|anedota|charada|piadinha)\b/i,
+    /\b(previs[aã]o do tempo|vai chover|temperatura amanh[aã]|clima em)\b/i,
+    /\b(resultado do jogo|brasileir[aã]o|quem ganhou o jogo|escalação do|tabela do campeonato|futebol)\b/i,
+    /\b(hor[oó]scopo|mapa astral|signo de [a-z]+|astrologia)\b/i,
+    /\b(calcule a integral|derivada de|raiz quadrada de|\d+\s*[\+\*\/\^]\s*\d+)\b/i,
+    /\b(redação sobre|trabalho de escola|exerc[ií]cio de matemática)\b/i,
+  ];
+  return offTopicPatterns.some((pattern) => pattern.test(lower));
+}
+
+function getScopeBoundaryResponse(pillarId: string): string {
+  const pillarTitles: Record<string, string> = {
+    feedback: "Assistente de Feedback Estratégico",
+    sos: "SOS Inteligência Emocional",
+    bussola: "Bússola Diária de Virtudes",
+  };
+  const title = pillarTitles[pillarId] || "Mentoria Executiva";
+
+  return `### ⚠️ Aviso de Escopo da Mentoria MasterMind
+
+Olá, líder! Como seu mentor executivo da **Fundação Napoleon Hill (MasterMind)** e especialista no **Eneagrama Sistêmico Vitruviano**, meu compromisso com você é exclusivamente direcionar desafios de **liderança, inteligência emocional, gestão de pessoas e alta performance**.
+
+> *"Defina seu objetivo com clareza inabalável. A dispersão e a perda de foco em um propósito definido são as principais causas do enfraquecimento do líder."* — Napoleon Hill
+
+Não é possível avançar em conversas ou solicitações que fujam do escopo do pilar atual (**${title}**).
+
+Por favor, compartilhe um **desafio de liderança**, uma **situação concreta com sua equipe** ou um **contexto de tomada de decisão** para continuarmos sua mentoria com foco e excelência.`;
+}
+
 // Helper for local fallback mentorship when API key is not configured or hits limits
 function generateLocalMentorResponse(
   pillarId: string,
@@ -136,6 +184,10 @@ function generateLocalMentorResponse(
 ): string {
   const lastUserMsg = messages[messages.length - 1]?.content || "";
   const conversationText = messages.map((m) => m.content).join(" \n");
+
+  if (isOffTopicQuery(lastUserMsg)) {
+    return getScopeBoundaryResponse(pillarId);
+  }
 
   // Determine user and peer types
   let resolvedUserType = userEnneatype || null;

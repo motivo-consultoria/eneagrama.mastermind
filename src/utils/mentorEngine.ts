@@ -1,10 +1,51 @@
-import { ENNEAGRAM_TYPES, EnneatypeInfo } from "../data/enneagramData";
+import { ENNEAGRAM_TYPES, EnneatypeInfo, PILLARS } from "../data/enneagramData";
 
 export interface MentorContext {
   pillarId: "feedback" | "sos" | "bussola";
   userEnneatype?: number | null;
   peerEnneatype?: number | null;
   messages: Array<{ role: string; content: string }>;
+}
+
+/**
+ * Checks if a user message is completely out of scope of the MasterMind leadership & emotional intelligence mentorship.
+ */
+export function isOffTopicMentorQuery(text: string): boolean {
+  if (!text || text.trim().length === 0) return false;
+  const lower = text.toLowerCase();
+
+  // If user is selecting an enneatype or providing business/team context, it's NOT off-topic
+  if (/(?:tipo|padr[ãa]o|eneatipo)\s*[1-9]/i.test(lower)) return false;
+  if (/(?:lider|equipe|reuni[ãa]o|feedback|gest[aã]o|conflito|press[aã]o|meta|bni|1on1|diretoria|estresse|demiss|contrat|desempenho|relat[oó]rio)/i.test(lower)) return false;
+
+  const offTopicPatterns = [
+    /\b(receita|bolo de|como cozinhar|ingredientes para|fazer pizza|almo[cç]o)\b/i,
+    /\b(escreva um c[oó]digo|crie uma fun[cç][aã]o|script em python|javascript|html|css|sql query|programar em)\b/i,
+    /\b(conte uma piada|anedota|charada|piadinha)\b/i,
+    /\b(previs[aã]o do tempo|vai chover|temperatura amanh[aã]|clima em)\b/i,
+    /\b(resultado do jogo|brasileir[aã]o|quem ganhou o jogo|escalação do|tabela do campeonato|futebol)\b/i,
+    /\b(hor[oó]scopo|mapa astral|signo de [a-z]+|astrologia)\b/i,
+    /\b(calcule a integral|derivada de|raiz quadrada de|\d+\s*[\+\*\/\^]\s*\d+)\b/i,
+    /\b(redação sobre|trabalho de escola|exerc[ií]cio de matemática)\b/i,
+  ];
+
+  return offTopicPatterns.some((pattern) => pattern.test(lower));
+}
+
+/**
+ * Returns a polite, firm boundary message when a conversation is out of scope.
+ */
+export function getScopeBoundaryMessage(pillarId: "feedback" | "sos" | "bussola"): string {
+  const pillar = PILLARS[pillarId] || PILLARS.feedback;
+  return `### ⚠️ Aviso de Escopo da Mentoria MasterMind
+
+Olá, líder! Como seu mentor executivo da **Fundação Napoleon Hill (MasterMind)** e especialista no **Eneagrama Sistêmico Vitruviano**, meu compromisso com você é exclusivamente direcionar desafios de **liderança, inteligência emocional, gestão de pessoas e alta performance**.
+
+> *"Defina seu objetivo com clareza inabalável. A dispersão e a perda de foco em um propósito definido são as principais causas do enfraquecimento do líder."* — Napoleon Hill
+
+Não é possível avançar em conversas ou solicitações que fujam do escopo do pilar atual (**${pillar.title}**).
+
+Por favor, compartilhe um **desafio de liderança**, uma **situação concreta com sua equipe** ou um **contexto de tomada de decisão** para continuarmos sua mentoria com foco e excelência.`;
 }
 
 /**
@@ -31,6 +72,11 @@ export function generateMentorResponse(
 ): string {
   const lastUserMessage = messages[messages.length - 1]?.content || "";
   const conversationText = messages.map((m) => m.content).join(" \n");
+
+  // Check for off-scope queries
+  if (isOffTopicMentorQuery(lastUserMessage)) {
+    return getScopeBoundaryMessage(pillarId);
+  }
 
   // Determine user and peer types either from params or by scanning conversation
   const resolvedUserType =
