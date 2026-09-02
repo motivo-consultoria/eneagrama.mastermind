@@ -93,7 +93,7 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 25000);
+      const timeoutId = setTimeout(() => controller.abort(), 35000);
 
       const response = await fetch("/api/chat", {
         method: "POST",

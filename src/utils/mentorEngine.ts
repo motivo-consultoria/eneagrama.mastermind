@@ -130,6 +130,41 @@ Como você percebe sua energia agora para dar o próximo direcionamento com sere
   }
 
   // 3. PILAR: BÚSSOLA DIÁRIA DE VIRTUDES
+  const fullContextText = (conversationText + " " + lastUserMessage).toLowerCase();
+  let activityContextSection = "";
+
+  if (fullContextText.includes("bni") || fullContextText.includes("business network")) {
+    activityContextSection = `#### 🌐 Contexto Estratégico da Atividade: Reunião do BNI (Business Network International)
+* **A Dinâmica do BNI:** O BNI é o maior grupo de networking profissional e referências estruturadas de negócios do mundo. Sua filosofia central é o **"Givers Gain" (Ganhar Conquistando / Doar para Receber)**.
+* **Momentos Críticos:** O pitch de apresentação rápida (30 a 60 segundos), a pontualidade rigorosa e a troca de referências qualificadas de negócios.
+* **Conexão com seu Padrão (Tipo ${userInfo.id}):** ${
+      userInfo.id === 7
+        ? "Como Entusiasta (Tipo 7), seu magnetismo e carisma são contagiantes no networking. Porém, a armadilha é a dispersão de ideias ou tentar vender tudo ao mesmo tempo no pitch. Sua virtude da **Sobriedade e Foco** é a chave para ser cirúrgico, objetivo e transmitir solidez inabalável aos parceiros."
+        : userInfo.id === 3
+        ? "Como Realizador (Tipo 3), você brilha em apresentações de alto impacto. A armadilha é parecer puramente transacional. Conecte-se com o valor genuíno que você gera para os colegas de grupo."
+        : userInfo.id === 8
+        ? "Como Desafiador (Tipo 8), sua presença impõe respeito. Cuide para que sua autoridade não intimide novos membros; mostre-se como um parceiro leal e protetor de negócios."
+        : `Utilize sua virtude de **${userInfo.virtue}** para construir relações de confiança profunda e mútua geração de valor.`
+    }
+
+---
+`;
+  } else if (conversationText.includes("1on1") || conversationText.includes("um a um") || conversationText.includes("alinhamento individual")) {
+    activityContextSection = `#### 👥 Contexto Estratégico da Atividade: Reunião 1on1
+* **A Dinâmica do 1on1:** Espaço de escuta ativa, desenvolvimento e alinhamento de expectativas mútuas.
+* **Conexão com seu Padrão (Tipo ${userInfo.id}):** Lidere pelo exemplo, aplicando a virtude de **${userInfo.virtue}** para gerar segurança e clareza.
+
+---
+`;
+  } else if (conversationText.includes("diretoria") || conversationText.includes("conselho") || conversationText.includes("board")) {
+    activityContextSection = `#### 🏛️ Contexto Estratégico da Atividade: Reunião de Diretoria / Conselho
+* **A Dinâmica Executiva:** Exige alta capacidade de síntese, clareza métrica, governança e alinhamento de visão estratégica.
+* **Conexão com seu Padrão (Tipo ${userInfo.id}):** Utilize a virtude de **${userInfo.virtue}** para direcionar decisões de alto impacto com serenidade e firmeza.
+
+---
+`;
+  }
+
   return `### 🧭 Bússola Diária de Virtudes MasterMind
 
 **Líder Padrão ${userInfo.id}:** ${userInfo.name} (${userInfo.subtitle})
@@ -138,14 +173,14 @@ Como você percebe sua energia agora para dar o próximo direcionamento com sere
 
 ---
 
-#### 📜 Pílula de Sabedoria Estratégica:
+${activityContextSection}#### 📜 Pílula de Sabedoria Estratégica Napoleon Hill:
 > *"${userInfo.dailyVirtueGuidance}"*
 
 ---
 
 #### ⚡ Desafio Prático de Liderança de 24 Horas:
 * **Foco da Missão:** ${userInfo.turningPoint}
-* **Aplicação Concreta:** Diante de sua prioridade de hoje (*${lastUserMessage.slice(0, 100) || "suas principais decisões"}*), tome uma decisão deliberada ancorada na virtude de **${userInfo.virtue}**, delegando com confiança e inspirando sua equipe pelo exemplo.
+* **Aplicação Concreta:** Diante de sua prioridade de hoje (*${lastUserMessage.slice(0, 100) || "suas principais decisões"}*), tome uma decisão deliberada ancorada na virtude de **${userInfo.virtue}**, gerando uma aliança MasterMind sólida e inspirando sua equipe pelo exemplo.
 
 ---
 

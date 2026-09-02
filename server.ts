@@ -106,6 +106,7 @@ DIRETRIZES POR PILAR:
 - Pilar 1 (Assistente de Feedback Estratégico):
   Ajude a conduzir conversas difíceis. Conduza de forma sequencial (seu padrão -> padrão do liderado -> contexto do feedback).
   Ao ter todas as informações:
+  * Contextualize o cenário e o impacto nos objetivos da equipe.
   * Indique a dinâmica relacional entre os dois padrões.
   * Forneça as palavras exatas e gatilhos de confiança a utilizar.
   * Destaque quais gatilhos emocionais EVITAR para não acionar a defesa do liderado.
@@ -113,13 +114,15 @@ DIRETRIZES POR PILAR:
 
 - Pilar 2 (SOS Inteligência Emocional / Auto-gestão):
   Resgate o equilíbrio emocional diante de crises. Ao receber o padrão e a situação:
-  * Identifique claramente o Vício Emocional do líder que foi ativado sob estresse.
+  * Contextualize o momento de pressão e identifique claramente o Vício Emocional do líder ativado sob estresse.
   * Ofereça exatamente 2 ações práticas e imediatas para resgatar a Virtude correspondente e retomar o domínio próprio.
 
 - Pilar 3 (Bússola Diária de Virtudes):
-  Foque a energia nas maiores forças para o dia. Ao receber o eneatipo e o desafio do dia:
-  * Entregue uma "Pílula de Sabedoria Napoleon Hill" conectando o desafio à virtude mestra do padrão.
-  * Proponha um "Desafio Prático de Liderança de 24h" mensurável e aplicável.
+  Foque a energia nas maiores forças para o dia. Ao receber o eneatipo e a atividade/desafio do dia:
+  * 1. CONTEXTUALIZAÇÃO PROFUNDA DA ATIVIDADE: Demonstre conhecimento específico sobre a atividade ou evento mencionado (por exemplo: se o usuário citar Reunião do BNI, contextualize a dinâmica do Business Network International, a cultura de "Givers Gain", a rodada de apresentações rápidas/pitch de 30 a 60 segundos, a pontualidade rigorosa e a geração de referências qualificadas de negócios; se citar Reunião de Diretoria, contextualize governança e síntese executiva; se citar Alinhamento 1on1, contextualize escuta empática e desenvolvimento).
+  * 2. CRUZAMENTO COM O ENEATIPO: Analise como o padrão comportamental do líder reage àquela atividade específica (pontos fortes a alavancar e riscos/tentações do vício emocional a neutralizar).
+  * 3. PÍLULA DE SABEDORIA NAPOLEON HILL: Conecte o desafio da atividade à Virtude Mestra do padrão e aos princípios MasterMind / Lei do Triunfo.
+  * 4. DESAFIO PRÁTICO DE LIDERANÇA DE 24H: Apresente uma meta comportamental concreta e mensurável para aplicar especificamente durante o evento ou atividade citada.
 
 Sempre responda em Português do Brasil com excelente formatação em Markdown (negritos, tópicos organizados).
 `;
@@ -229,6 +232,41 @@ Como você percebe seu estado mental agora para dar o próximo direcionamento co
   }
 
   // Bussola
+  const lowerMsg = (lastUserMsg + " " + conversationText).toLowerCase();
+  let activityContextSection = "";
+
+  if (lowerMsg.includes("bni") || lowerMsg.includes("business network")) {
+    activityContextSection = `#### 🌐 Contexto Estratégico da Atividade: Reunião do BNI (Business Network International)
+* **A Dinâmica do BNI:** O BNI é o maior grupo de networking profissional e referências estruturadas de negócios do mundo. Sua filosofia central é o **"Givers Gain" (Ganhar Conquistando / Doar para Receber)**.
+* **Momentos Críticos:** O pitch de apresentação rápida (30 a 60 segundos), a pontualidade rigorosa e a troca de referências qualificadas de negócios.
+* **Conexão com seu Padrão (Tipo ${leaderInfo.id}):** ${
+      leaderInfo.id === 7
+        ? "Como Entusiasta (Tipo 7), seu magnetismo e carisma são contagiantes no networking. Porém, a armadilha é a dispersão de ideias ou tentar vender tudo ao mesmo tempo no pitch. Sua virtude da **Sobriedade e Foco** é a chave para ser cirúrgico, objetivo e transmitir solidez inabalável aos parceiros."
+        : leaderInfo.id === 3
+        ? "Como Realizador (Tipo 3), você brilha em apresentações de alto impacto. A armadilha é parecer puramente transacional. Conecte-se com o valor genuíno que você gera para os colegas de grupo."
+        : leaderInfo.id === 8
+        ? "Como Desafiador (Tipo 8), sua presença impõe respeito. Cuide para que sua autoridade não intimide novos membros; mostre-se como um parceiro leal e protetor de negócios."
+        : `Utilize sua virtude de **${leaderInfo.virtue}** para construir relações de confiança profunda e mútua geração de valor.`
+    }
+
+---
+`;
+  } else if (lowerMsg.includes("1on1") || lowerMsg.includes("um a um") || lowerMsg.includes("alinhamento individual")) {
+    activityContextSection = `#### 👥 Contexto Estratégico da Atividade: Reunião 1on1
+* **A Dinâmica do 1on1:** Espaço sagrado de escuta ativa, desenvolvimento e alinhamento de expectativas mútuas, não apenas checagem de tarefas operacionais.
+* **Conexão com seu Padrão (Tipo ${leaderInfo.id}):** Lidere pelo exemplo, aplicando a virtude de **${leaderInfo.virtue}** para gerar segurança psicológica e clareza de futuro.
+
+---
+`;
+  } else if (lowerMsg.includes("diretoria") || lowerMsg.includes("conselho") || lowerMsg.includes("board")) {
+    activityContextSection = `#### 🏛️ Contexto Estratégico da Atividade: Reunião de Diretoria / Conselho
+* **A Dinâmica Executiva:** Exige alta capacidade de síntese, clareza métrica, governança e alinhamento de visão estratégica de longo prazo.
+* **Conexão com seu Padrão (Tipo ${leaderInfo.id}):** Mantenha o equilíbrio emocional e utilize a virtude de **${leaderInfo.virtue}** para direcionar decisões de alto impacto com serenidade e firmeza.
+
+---
+`;
+  }
+
   return `### 🧭 Bússola Diária de Virtudes MasterMind
 
 **Líder Padrão ${leaderInfo.id}:** ${leaderInfo.name} (${leaderInfo.subtitle})
@@ -237,14 +275,14 @@ Como você percebe seu estado mental agora para dar o próximo direcionamento co
 
 ---
 
-#### 📜 Pílula de Sabedoria Estratégica:
+${activityContextSection}#### 📜 Pílula de Sabedoria Estratégica Napoleon Hill:
 > *"${leaderInfo.dailyVirtueGuidance}"*
 
 ---
 
 #### ⚡ Desafio Prático de Liderança de 24 Horas:
 * **Foco da Missão:** ${leaderInfo.turningPoint}
-* **Aplicação Concreta:** Diante de sua principal decisão de hoje (*${lastUserMsg.slice(0, 80) || "suas reuniões e direcionamentos"}*), aplique deliberadamente a virtude de **${leaderInfo.virtue}**, agindo como referência de propósito e equilíbrio para sua equipe.
+* **Aplicação Concreta:** Diante de sua atividade de hoje (*${lastUserMsg.slice(0, 100) || "suas reuniões e direcionamentos"}*), aplique deliberadamente a virtude de **${leaderInfo.virtue}**, gerando uma aliança MasterMind sólida e focada em resultados mútuos.
 
 ---
 
@@ -287,7 +325,7 @@ function prepareGeminiContents(messages: Array<{ role: string; content: string }
   return formatted;
 }
 
-async function generateWithTimeout<T>(promise: Promise<T>, ms = 6000): Promise<T> {
+async function generateWithTimeout<T>(promise: Promise<T>, ms = 30000): Promise<T> {
   let timer: NodeJS.Timeout;
   const timeoutPromise = new Promise<T>((_, reject) => {
     timer = setTimeout(() => reject(new Error("AI generation timeout")), ms);
@@ -320,7 +358,7 @@ DESCRIÇÃO: ${pillar.description}
 ${userTypeStr}
 ${peerTypeStr}
 
-DIRETRIZ DE PESQUISA & ATIVIDADE DINÂMICA:
+DIRETRIZ DE RESPOSTA:
 - Você é Napoleon Hill. Elabore respostas profundas, dinâmicas, altamente personalizadas e estruturadas com clareza executiva, dividindo em seções claras (Diagnóstico do Padrão, Mecânica Comportamental, Roteiro Prático de Palavras Exatas e Princípio MasterMind).`;
 
     let responseText = "";
@@ -337,7 +375,7 @@ DIRETRIZ DE PESQUISA & ATIVIDADE DINÂMICA:
             temperature: 0.7,
           },
         }),
-        6000
+        25000
       );
       responseText = response.text || "";
       const searchChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
@@ -352,7 +390,7 @@ DIRETRIZ DE PESQUISA & ATIVIDADE DINÂMICA:
         }
       }
     } catch (modelErr: any) {
-      console.warn("Primary model gemini-3.6-flash attempt failed, trying gemini-3.7-flash:", modelErr?.message || modelErr);
+      console.log("Primary model attempt notice:", modelErr?.message || modelErr);
       try {
         const response2 = await generateWithTimeout(
           ai.models.generateContent({
@@ -363,11 +401,11 @@ DIRETRIZ DE PESQUISA & ATIVIDADE DINÂMICA:
               temperature: 0.7,
             },
           }),
-          5000
+          20000
         );
         responseText = response2.text || "";
       } catch (err2: any) {
-        console.warn("Gemini API call failed or timed out, using high-precision local MasterMind engine:", err2?.message || err2);
+        console.log("Using high-precision local MasterMind engine:", err2?.message || err2);
         responseText = generateLocalMentorResponse(pillarId, messages, userEnneatype, peerEnneatype);
       }
     }
@@ -378,7 +416,7 @@ DIRETRIZ DE PESQUISA & ATIVIDADE DINÂMICA:
 
     return res.json({ text: responseText, webSources });
   } catch (error: any) {
-    console.error("General Error in /api/chat:", error);
+    console.log("Chat endpoint fallback:", error?.message || error);
     const fallbackResponse = generateLocalMentorResponse(req.body?.pillarId || "feedback", req.body?.messages || [], req.body?.userEnneatype, req.body?.peerEnneatype);
     return res.json({ text: fallbackResponse, webSources: [] });
   }
