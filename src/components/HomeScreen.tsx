@@ -48,7 +48,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       </header>
 
       {/* 3 Main Pillar Cards */}
-      <main className="my-8 sm:my-10 space-y-4">
+      <main className="my-6 sm:my-10 space-y-3.5 sm:space-y-4">
         {Object.values(PILLARS).map((pillar: PillarConfig) => {
           const isFeedback = pillar.id === "feedback";
           const isSos = pillar.id === "sos";
@@ -57,7 +57,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             <button
               key={pillar.id}
               onClick={() => onSelectPillar(pillar.id)}
-              className="w-full group text-left p-5 sm:p-6 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200 hover:border-red-600/40 transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden"
+              className="w-full group text-left p-4 sm:p-6 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200 hover:border-red-600/40 transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 relative overflow-hidden"
             >
               {/* Left Accent Stripe */}
               <div
@@ -70,28 +70,28 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 }`}
               />
 
-              <div className="flex items-start sm:items-center gap-4 pl-2">
-                <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200 group-hover:border-neutral-300 transition-colors shrink-0">
+              <div className="flex items-start sm:items-center gap-3.5 sm:gap-4 pl-1.5 sm:pl-2 flex-1 min-w-0">
+                <div className="p-2.5 sm:p-3 rounded-xl bg-neutral-50 border border-neutral-200 group-hover:border-neutral-300 transition-colors shrink-0 mt-0.5 sm:mt-0">
                   {getPillarIcon(pillar.id)}
                 </div>
 
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200">
+                <div className="space-y-1.5 flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2.5">
+                    <span className="inline-flex items-center justify-center whitespace-nowrap shrink-0 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-neutral-100 text-neutral-700 border border-neutral-200 self-start">
                       {pillar.badge}
                     </span>
-                    <h2 className="text-base sm:text-lg font-bold text-neutral-900 group-hover:text-red-700 transition-colors font-executive">
+                    <h2 className="text-sm sm:text-lg font-bold text-neutral-900 group-hover:text-red-700 transition-colors font-executive leading-tight sm:leading-snug">
                       {pillar.title}
                     </h2>
                   </div>
-                  <p className="text-xs sm:text-sm text-neutral-500 line-clamp-2">
+                  <p className="text-xs sm:text-sm text-neutral-500 line-clamp-2 leading-relaxed">
                     {pillar.subtitle}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-xs font-bold text-red-600 group-hover:text-red-700 self-end sm:self-center shrink-0 pl-2">
-                <span>Iniciar Mentoria</span>
+              <div className="flex items-center gap-1.5 text-xs font-bold text-red-600 group-hover:text-red-700 self-end sm:self-center shrink-0 pl-1.5 sm:pl-2 pt-1 sm:pt-0">
+                <span className="whitespace-nowrap">Iniciar Mentoria</span>
                 <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
               </div>
             </button>

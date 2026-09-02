@@ -334,18 +334,18 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
             <ArrowLeft className="w-4 h-4" />
           </button>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
             <NapoleonHillAvatar size="sm" />
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-red-100 text-red-800 border border-red-200">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="inline-flex items-center justify-center whitespace-nowrap shrink-0 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-red-100 text-red-800 border border-red-200">
                   {currentPillar.badge}
                 </span>
-                <h2 className="text-sm sm:text-base font-bold text-neutral-900 truncate max-w-[170px] sm:max-w-xs font-executive">
+                <h2 className="text-xs sm:text-base font-bold text-neutral-900 truncate max-w-[130px] xs:max-w-[180px] sm:max-w-xs font-executive">
                   {currentPillar.title}
                 </h2>
               </div>
-              <p className="text-[11px] text-neutral-500 truncate">
+              <p className="text-[10px] sm:text-[11px] text-neutral-500 truncate">
                 Mentor Napoleon Hill • MasterMind®
               </p>
             </div>
