@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import napoleonCustomPortrait from "../assets/images/napoleon-hill-custom.png";
 import napoleonDefaultPortrait from "../assets/images/napoleon_avatar_1788304974269.jpg";
+import napoleonFallbackSvg from "../assets/images/napoleon-hill.svg";
 
 interface NapoleonHillAvatarProps {
   size?: "xs" | "sm" | "md" | "lg";
@@ -10,11 +12,11 @@ export const NapoleonHillAvatar: React.FC<NapoleonHillAvatarProps> = ({
   size = "md",
   className = "",
 }) => {
-  // Use user's edited/uploaded custom image if saved, otherwise default portrait, then fallback to SVG
+  // Use user's edited/uploaded custom image if saved, otherwise custom imported portrait, then fallback
   const [avatarSrc, setAvatarSrc] = useState<string>(() => {
     return (
       localStorage.getItem("napoleon_hill_custom_avatar") ||
-      "/napoleon-hill-custom.png" ||
+      napoleonCustomPortrait ||
       napoleonDefaultPortrait
     );
   });
@@ -41,11 +43,13 @@ export const NapoleonHillAvatar: React.FC<NapoleonHillAvatarProps> = ({
       <img
         src={avatarSrc}
         onError={() => {
-          // Fallbacks in order: default imported portrait -> public jpg -> svg
-          if (avatarSrc !== napoleonDefaultPortrait) {
+          // Fallbacks in order: custom portrait -> default portrait -> bundled svg
+          if (avatarSrc !== napoleonCustomPortrait) {
+            setAvatarSrc(napoleonCustomPortrait);
+          } else if (avatarSrc !== napoleonDefaultPortrait) {
             setAvatarSrc(napoleonDefaultPortrait);
-          } else if (avatarSrc !== "/napoleon-hill.svg") {
-            setAvatarSrc("/napoleon-hill.svg");
+          } else if (avatarSrc !== napoleonFallbackSvg) {
+            setAvatarSrc(napoleonFallbackSvg);
           }
         }}
         alt="Napoleon Hill - Mentor MasterMind"

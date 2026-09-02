@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350" width="350" height="350">
+  <defs>
+    <!-- Background Circle Fill -->
+    <linearGradient id="bgCircleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7F7F8"/>
+      <stop offset="100%" stop-color="#EDEDF0"/>
+    </linearGradient>
+
+    <!-- Front Vibrant Red Ribbon Gradient -->
+    <linearGradient id="frontRibbon" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D81E27"/>
+      <stop offset="25%" stop-color="#EB222B"/>
+      <stop offset="50%" stop-color="#ED2128"/>
+      <stop offset="75%" stop-color="#EB222B"/>
+      <stop offset="100%" stop-color="#D81E27"/>
+    </linearGradient>
+
+    <!-- Deep Burgundy Inner Fold Shadow 1 -->
+    <linearGradient id="innerFold1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7B1113"/>
+      <stop offset="100%" stop-color="#9E181B"/>
+    </linearGradient>
+
+    <!-- Deep Burgundy Inner Fold Shadow 2 -->
+    <linearGradient id="innerFold2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7B1113"/>
+      <stop offset="100%" stop-color="#9E181B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Clean Pure White Background -->
+  <rect width="350" height="350" fill="#FFFFFF"/>
+
+  <!-- Intersecting Subtle Circles (Eneagrama / MasterMind System) -->
+  <!-- Top-Right Soft Filled Solid Circle -->
+  <circle cx="218" cy="138" r="88" fill="url(#bgCircleGrad)"/>
+  
+  <!-- Left Overlay Circle Outline -->
+  <circle cx="132" cy="172" r="76" fill="none" stroke="#E2E4E8" stroke-width="1.2"/>
+  
+  <!-- Bottom Center Overlay Circle Outline -->
+  <circle cx="188" cy="205" r="86" fill="none" stroke="#E2E4E8" stroke-width="1.2"/>
+
+  <!-- 3D Ribbon: Underside / Inner Shaded Folds -->
+  <!-- Fold 1 (Between Loop 1 and Loop 2) -->
+  <path d="M 124 158 C 132 122, 148 108, 163 146 C 152 168, 136 172, 124 158 Z" fill="url(#innerFold1)"/>
+  
+  <!-- Fold 2 (Between Loop 2 and Loop 3) -->
+  <path d="M 188 152 C 196 112, 214 102, 230 144 C 218 168, 202 168, 188 152 Z" fill="url(#innerFold2)"/>
+
+  <!-- 3D Ribbon: Front Red Continuous Wave 'M' -->
+  <path d="M 88 158
+           C 92 144, 96 118, 114 110
+           C 128 104, 138 116, 144 142
+           C 152 174, 160 178, 170 148
+           C 178 120, 184 82, 204 80
+           C 222 78, 230 108, 236 138
+           C 242 168, 248 172, 258 142
+           C 264 122, 268 96, 282 92
+           C 294 88, 300 106, 298 132
+           C 296 148, 290 162, 276 166
+           C 266 168, 258 154, 254 136
+           C 248 106, 244 98, 236 100
+           C 228 102, 222 132, 216 158
+           C 208 190, 194 192, 184 162
+           C 176 134, 172 104, 162 104
+           C 154 104, 148 126, 142 152
+           C 134 186, 120 188, 110 168
+           C 102 152, 98 144, 92 154
+           C 86 162, 82 166, 76 156
+           C 72 150, 78 142, 88 158 Z"
+        fill="url(#frontRibbon)"/>
+
+  <!-- Ribbon Highlights for Gloss Effect -->
+  <path d="M 198 84 C 206 82, 212 90, 216 106 C 210 102, 204 94, 198 84 Z" fill="#FFA3A6" opacity="0.6"/>
+  <path d="M 276 96 C 282 94, 288 100, 290 114 C 286 110, 280 104, 276 96 Z" fill="#FFA3A6" opacity="0.6"/>
+
+  <!-- Integrated "MasterMind ®" Text -->
+  <g transform="translate(175, 232)" text-anchor="middle">
+    <text font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" fill="#363A3D" letter-spacing="-0.5px">
+      <!-- Master: Regular weight (38px) -->
+      <tspan x="-12" y="0" font-size="39" font-weight="400" text-anchor="end">Master</tspan>
+      <!-- Mind: Bold weight (38px) -->
+      <tspan x="-10" y="0" font-size="39" font-weight="700" text-anchor="start">Mind</tspan>
+      <!-- Registered Trademark Sign ® -->
+      <tspan font-size="18" font-weight="600" dy="-17" dx="3">®</tspan>
+    </text>
+  </g>
+</svg>

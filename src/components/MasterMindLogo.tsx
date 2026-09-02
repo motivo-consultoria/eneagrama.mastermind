@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import defaultLogoPng from "../assets/images/mastermind-logo.png";
+import fallbackLogoSvg from "../assets/images/mastermind-logo.svg";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg" | "xl";
@@ -12,7 +14,7 @@ export const MasterMindLogo: React.FC<LogoProps> = ({
   className = "",
 }) => {
   const [logoSrc, setLogoSrc] = useState<string>(() => {
-    return localStorage.getItem("mastermind_uploaded_logo") || "/mastermind-logo.png";
+    return localStorage.getItem("mastermind_uploaded_logo") || defaultLogoPng;
   });
 
   useEffect(() => {
@@ -54,13 +56,13 @@ export const MasterMindLogo: React.FC<LogoProps> = ({
     <div
       className={`inline-flex flex-col items-center justify-center select-none bg-white rounded-2xl ${current.padding} ${className}`}
     >
-      {/* 100% Exact 1:1 Image Rendering (Untouched Binary) */}
+      {/* 100% Exact 1:1 Image Rendering (Bundled Asset) */}
       <img
         src={logoSrc}
         onError={() => {
-          // Fallback to SVG if PNG is not present yet
-          if (logoSrc !== "/mastermind-logo.svg") {
-            setLogoSrc("/mastermind-logo.svg");
+          // Fallback to SVG if PNG fails
+          if (logoSrc !== fallbackLogoSvg) {
+            setLogoSrc(fallbackLogoSvg);
           }
         }}
         alt="MasterMind Treinamentos de Alta Performance"
