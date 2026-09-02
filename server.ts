@@ -13,6 +13,10 @@ const PORT = 3000;
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb", extended: true }));
 
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 // Endpoint to directly receive and save the exact logo image from UI
 import fs from "fs";
 app.post("/api/upload-logo", (req, res) => {
@@ -120,115 +124,133 @@ DIRETRIZES POR PILAR:
 Sempre responda em Português do Brasil com excelente formatação em Markdown (negritos, tópicos organizados).
 `;
 
-// Helper for local fallback mentorship when API key is not configured
-function generateLocalMentorResponse(pillarId: string, messages: Array<{ role: string; content: string }>): string {
+// Helper for local fallback mentorship when API key is not configured or hits limits
+function generateLocalMentorResponse(
+  pillarId: string,
+  messages: Array<{ role: string; content: string }>,
+  userEnneatype?: number | null,
+  peerEnneatype?: number | null
+): string {
   const lastUserMsg = messages[messages.length - 1]?.content || "";
-  const lastUserMsgLower = lastUserMsg.toLowerCase();
+  const conversationText = messages.map((m) => m.content).join(" \n");
 
-  // Try to detect Enneatype numbers in message
-  const matchLeaderType = lastUserMsg.match(/\b([1-9])\b/) || lastUserMsg.match(/tipo\s*([1-9])/i) || lastUserMsg.match(/eneatipo\s*([1-9])/i);
-  const detectedTypeNum = matchLeaderType ? parseInt(matchLeaderType[1], 10) : null;
-  const detectedInfo = detectedTypeNum && ENNEAGRAM_TYPES[detectedTypeNum] ? ENNEAGRAM_TYPES[detectedTypeNum] : null;
+  // Determine user and peer types
+  let resolvedUserType = userEnneatype || null;
+  if (!resolvedUserType) {
+    const match = conversationText.match(/(?:meu padrão|meu eneatipo|sou tipo|tipo)\s*([1-9])/i) || lastUserMsg.match(/\b([1-9])\b/);
+    if (match) resolvedUserType = parseInt(match[1], 10);
+  }
+  if (!resolvedUserType || !ENNEAGRAM_TYPES[resolvedUserType]) resolvedUserType = 1;
+
+  let resolvedPeerType = peerEnneatype || null;
+  if (!resolvedPeerType && pillarId === "feedback") {
+    const match = conversationText.match(/(?:liderado|outra pessoa|pessoa envolvida|tipo)\s*([1-9])/i);
+    if (match) resolvedPeerType = parseInt(match[1], 10);
+    if (!resolvedPeerType || !ENNEAGRAM_TYPES[resolvedPeerType]) resolvedPeerType = 3;
+  }
+
+  const leaderInfo = ENNEAGRAM_TYPES[resolvedUserType] || ENNEAGRAM_TYPES[1];
+  const peerInfo = resolvedPeerType ? ENNEAGRAM_TYPES[resolvedPeerType] : null;
 
   if (pillarId === "feedback") {
-    if (detectedInfo) {
-      return `### 🎯 Diagnóstico Estratégico MasterMind
+    if (peerInfo) {
+      return `### 🎯 Roteiro de Feedback Executivo MasterMind
 
-**Seu Padrão:** Tipo ${detectedInfo.id} (${detectedInfo.name} - ${detectedInfo.subtitle})
-**Virtude a Manifestar:** ${detectedInfo.virtue}
+**Líder em Ação:** Tipo ${leaderInfo.id} (${leaderInfo.name}) • Virtude a manifestar: **${leaderInfo.virtue}**
+**Liderado / Interlocutor:** Tipo ${peerInfo.id} (${peerInfo.name}) • Fixação a considerar: *${peerInfo.mentalFixation}*
 
 ---
 
-#### 1. Dinâmica da Conversa & Pontos de Atenção
-* **Postura Recomendada:** ${detectedInfo.feedbackAdviceAsLeader}
-* **Gatilhos a EVITAR:** ${detectedInfo.communicationTriggersToAvoid.join("; ")}.
+#### 1. Diagnóstico Relacional & Dinâmica dos Padrões:
+* **Seu Padrão como Líder (Tipo ${leaderInfo.id}):** ${leaderInfo.feedbackAdviceAsLeader}
+* **Necessidade Comportamental do Liderado (Tipo ${peerInfo.id}):** ${peerInfo.feedbackAdviceAsSubordinate}
+* **Gatilhos Emocionais a EVITAR TERMINANTEMENTE:** ${peerInfo.communicationTriggersToAvoid.join(" • ")}.
 
-#### 2. Roteiro Executivo de Feedback
-1. **Abertura de Confiança:** Inicie reconhecendo a intenção positiva e o alinhamento com o objetivo comum do time.
-2. **Fatos Objetivos:** Apresente o impacto da situação sem rotular ou julgar o caráter do liderado.
-3. **Pacto de Ação:** Convide o liderado para cocriar a solução com um compromisso claro e data de alinhamento.
+---
 
-> *"O autêntico líder MasterMind não impõe pelo medo, mas alinha propósitos pela clareza e respeito mútuo."*
+#### 2. Roteiro Executivo de 3 Passos (Palavras Sugeridas):
 
-Gostaria de refinar as palavras exatas para uma frase específica de abertura?`;
+1. **Abertura com Vínculo e Intenção Positiva (Rapport):**
+   > *"Quero começar destacando o quanto valorizo sua dedicação e contribuição. Estamos aqui para alinhar nossos passos e elevar juntos o padrão dos nossos resultados com total transparência."*
+
+2. **Apresentação de Fatos Objetivos (Sem Julgamento de Caráter):**
+   > *"Sobre a situação recente (${lastUserMsg.slice(0, 100).replace(/\n/g, " ") || "os últimos entregáveis"}), notei pontos que precisamos calibrar. Como você avalia o desfecho desse processo até aqui?"*
+
+3. **Pacto de Ação & Compromisso Mútuo:**
+   > *"Conectando com a sua virtude de ${peerInfo.virtue}, qual solução prática você propõe para ajustarmos isso imediatamente? Vamos traçar um plano de ação e acompanhar a evolução."*
+
+---
+
+#### 3. Princípio de Alta Performance Napoleon Hill:
+> *"O autêntico líder não vence discussões pela força, mas conquista a cooperação voluntária alinhando mentes em torno de um propósito definido."*
+
+Gostaria de calibrar alguma frase específica para o momento exato da sua conversa?`;
     }
 
-    return `### 🎯 Assistente de Feedback Estratégico
+    return `### 🎯 Assistente de Feedback Estratégico MasterMind
 
-Entendido. Para calibrarmos a abordagem com precisão cirúrgica:
+Entendido, Líder Tipo ${leaderInfo.id} (${leaderInfo.name}).
 
-1. **Qual é o seu Eneatipo** (ou o padrão em que você mais se reconhece)?
-2. **Qual é o Eneatipo provável do seu liderado?**
-3. **Qual é a situação concreta** que necessita de alinhamento?
+Para que eu formule o roteiro executivo com palavras exatas:
+1. **Qual é o Eneatipo provável do liderado (1 a 9)?**
+2. **Qual é a situação concreta que necessita de alinhamento?**
 
-*Com essas informações, estruturarei o roteiro de palavras exatas e os gatilhos a evitar.*`;
+*Assim que você detalhar, entregarei o diagnóstico dos gatilhos e a estrutura completa.*`;
   }
 
   if (pillarId === "sos") {
-    if (detectedInfo) {
-      return `### 🛡️ SOS Inteligência Emocional MasterMind
+    return `### 🛡️ SOS Inteligência Emocional MasterMind
 
-**Padrão Ativado:** Tipo ${detectedInfo.id} (${detectedInfo.name})
-**Vício Emocional Sob Estresse:** **${detectedInfo.emotionalVice}**
-**Virtude Mestra a Resgatar:** **${detectedInfo.virtue}**
-
----
-
-#### 🚨 2 Ações Práticas Imediatas:
-1. **${detectedInfo.sosActions[0]}**
-2. **${detectedInfo.sosActions[1]}**
+**Líder em Comando:** Tipo ${leaderInfo.id} (${leaderInfo.name} - ${leaderInfo.subtitle})
+**Vício Emocional Sob Estresse:** **${leaderInfo.emotionalVice}**
+**Virtude Mestra a Resgatar:** **${leaderInfo.virtue}**
 
 ---
 
-#### 💡 Atitude de Cura Mental:
-> *"${detectedInfo.healingAttitude}"*
+#### 🚨 2 Ações Práticas Imediatas de Domínio Próprio:
+1. **${leaderInfo.sosActions[0]}**
+2. **${leaderInfo.sosActions[1]}**
 
-**Respiração de Transição:** Inspire em 4 tempos, retenha o ar por 2 tempos e solte em 6 tempos, reconectando-se com a sua essência antes de qualquer decisão.
+---
 
-Como você está se sentindo agora para dar o próximo passo?`;
-    }
+#### 💡 Atitude Mental de Cura (Napoleon Hill):
+> *"${leaderInfo.healingAttitude}"*
 
-    return `### 🛡️ SOS Inteligência Emocional
+---
 
-Respire fundo. O primeiro passo da liderança de alta performance é o autodomínio.
+#### 🌬️ Exercício de Centralização (Técnica dos 3 Tempos):
+* Inspire pelo nariz em **4** tempos (trazendo clareza mental).
+* Retenha o ar com firmeza por **2** tempos (afirmando seu comando interno).
+* Expire suavemente pela boca em **6** tempos, dissolvendo a tensão de *${leaderInfo.emotionalVice}*.
 
-Por favor, me diga:
-- **Qual é o seu Eneatipo (1 a 9)?**
-- **O que aconteceu especificamente que está gerando esse pico de estresse ou tirando você do eixo?**
+> *"O autodomínio é a primeira e mais nobre vitória que um líder pode conquistar."* — Napoleon Hill
 
-*Vou identificar o vício emocional ativado e te entregar 2 ações práticas imediatas para resgatar sua virtude.*`;
+Como você percebe seu estado mental agora para dar o próximo direcionamento com serenidade?`;
   }
 
-  // Pillar 3: Bussola
-  if (detectedInfo) {
-    return `### 🧭 Bússola Diária de Virtudes MasterMind
+  // Bussola
+  return `### 🧭 Bússola Diária de Virtudes MasterMind
 
-**Líder Padrão ${detectedInfo.id}:** ${detectedInfo.name}
-**Virtude Farol do Dia:** **${detectedInfo.virtue}**
-
----
-
-#### 📜 Pílula de Sabedoria MasterMind:
-> *"${detectedInfo.dailyVirtueGuidance}"*
+**Líder Padrão ${leaderInfo.id}:** ${leaderInfo.name} (${leaderInfo.subtitle})
+**Virtude Farol do Dia:** **${leaderInfo.virtue}**
+**Armadilha Comportamental a Contornar:** *${leaderInfo.mentalFixation}* (${leaderInfo.emotionalVice})
 
 ---
 
-#### ⚡ Desafio Prático de Liderança (Próximas 24h):
-* **Missão:** ${detectedInfo.turningPoint}
-* **Ação Concreta:** Identifique hoje uma oportunidade com a sua equipe onde você colocará em prática a virtude de **${detectedInfo.virtue}**, evitando cair na armadilha da fixação de *${detectedInfo.mentalFixation}*.
+#### 📜 Pílula de Sabedoria Estratégica:
+> *"${leaderInfo.dailyVirtueGuidance}"*
 
-Qual é o primeiro momento do seu dia onde você aplicará esse desafio?`;
-  }
+---
 
-  return `### 🧭 Bússola Diária de Virtudes
+#### ⚡ Desafio Prático de Liderança de 24 Horas:
+* **Foco da Missão:** ${leaderInfo.turningPoint}
+* **Aplicação Concreta:** Diante de sua principal decisão de hoje (*${lastUserMsg.slice(0, 80) || "suas reuniões e direcionamentos"}*), aplique deliberadamente a virtude de **${leaderInfo.virtue}**, agindo como referência de propósito e equilíbrio para sua equipe.
 
-Excelente iniciativa para direcionar sua energia com intencionalidade.
+---
 
-Para desenhar sua bússola diária:
-1. **Qual é o seu Eneatipo (1 a 9)?**
-2. **Qual é o seu principal desafio ou decisão estratégica de hoje?**
+> *"Defina seu objetivo principal com clareza inabalável e coloque sua virtude mestra a serviço dessa realização."* — Napoleon Hill
 
-*Entregarei uma pílula de sabedoria sob medida e seu desafio de liderança de 24 horas.*`;
+Qual será sua primeira ação estratégica hoje para materializar esse desafio?`;
 }
 
 // Helper to format conversation turns properly for Gemini API (ensures alternating turns and starting with user)
@@ -265,6 +287,14 @@ function prepareGeminiContents(messages: Array<{ role: string; content: string }
   return formatted;
 }
 
+async function generateWithTimeout<T>(promise: Promise<T>, ms = 6000): Promise<T> {
+  let timer: NodeJS.Timeout;
+  const timeoutPromise = new Promise<T>((_, reject) => {
+    timer = setTimeout(() => reject(new Error("AI generation timeout")), ms);
+  });
+  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timer));
+}
+
 // API Chat Endpoint
 app.post("/api/chat", async (req, res) => {
   try {
@@ -273,7 +303,7 @@ app.post("/api/chat", async (req, res) => {
 
     if (!ai) {
       // Use rich deterministic MasterMind logic if no API key is available
-      const fallbackResponse = generateLocalMentorResponse(pillarId, messages);
+      const fallbackResponse = generateLocalMentorResponse(pillarId, messages, userEnneatype, peerEnneatype);
       return res.json({ text: fallbackResponse, webSources: [] });
     }
 
@@ -291,40 +321,65 @@ ${userTypeStr}
 ${peerTypeStr}
 
 DIRETRIZ DE PESQUISA & ATIVIDADE DINÂMICA:
-- Você tem acesso à ferramenta de pesquisa Google Search para enriquecer suas análises com dados, exemplos de liderança contemporânea, fundamentos dos livros de Napoleon Hill e referências comportamentais robustas.
-- Elabore respostas profundas, dinâmicas, estruturadas com clareza executiva, dividindo em seções claras (Diagnóstico do Padrão, Mecânica Comportamental, Roteiro Prático de Palavras Exatas e Princípio MasterMind).`;
+- Você é Napoleon Hill. Elabore respostas profundas, dinâmicas, altamente personalizadas e estruturadas com clareza executiva, dividindo em seções claras (Diagnóstico do Padrão, Mecânica Comportamental, Roteiro Prático de Palavras Exatas e Princípio MasterMind).`;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
-      contents,
-      config: {
-        systemInstruction,
-        temperature: 0.7,
-        tools: [{ googleSearch: {} }],
-      },
-    });
+    let responseText = "";
+    let webSources: Array<{ title: string; uri: string }> = [];
 
-    const responseText = response.text || "Não foi possível gerar a resposta no momento.";
-
-    // Extract grounding web search citations if available
-    const searchChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
-    const webSources: Array<{ title: string; uri: string }> = [];
-    if (searchChunks && Array.isArray(searchChunks)) {
-      for (const chunk of searchChunks) {
-        if (chunk?.web?.uri) {
-          webSources.push({
-            title: chunk.web.title || chunk.web.uri,
-            uri: chunk.web.uri,
-          });
+    // Attempt generation with primary fast model gemini-3.6-flash, fallback to gemini-3.7-flash or local engine
+    try {
+      const response = await generateWithTimeout(
+        ai.models.generateContent({
+          model: "gemini-3.6-flash",
+          contents,
+          config: {
+            systemInstruction,
+            temperature: 0.7,
+          },
+        }),
+        6000
+      );
+      responseText = response.text || "";
+      const searchChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
+      if (searchChunks && Array.isArray(searchChunks)) {
+        for (const chunk of searchChunks) {
+          if (chunk?.web?.uri) {
+            webSources.push({
+              title: chunk.web.title || chunk.web.uri,
+              uri: chunk.web.uri,
+            });
+          }
         }
       }
+    } catch (modelErr: any) {
+      console.warn("Primary model gemini-3.6-flash attempt failed, trying gemini-3.7-flash:", modelErr?.message || modelErr);
+      try {
+        const response2 = await generateWithTimeout(
+          ai.models.generateContent({
+            model: "gemini-3.7-flash",
+            contents,
+            config: {
+              systemInstruction,
+              temperature: 0.7,
+            },
+          }),
+          5000
+        );
+        responseText = response2.text || "";
+      } catch (err2: any) {
+        console.warn("Gemini API call failed or timed out, using high-precision local MasterMind engine:", err2?.message || err2);
+        responseText = generateLocalMentorResponse(pillarId, messages, userEnneatype, peerEnneatype);
+      }
+    }
+
+    if (!responseText) {
+      responseText = generateLocalMentorResponse(pillarId, messages, userEnneatype, peerEnneatype);
     }
 
     return res.json({ text: responseText, webSources });
   } catch (error: any) {
-    console.error("Gemini API Error in /api/chat:", error);
-    // Graceful fallback to rich local logic on error
-    const fallbackResponse = generateLocalMentorResponse(req.body?.pillarId || "feedback", req.body?.messages || []);
+    console.error("General Error in /api/chat:", error);
+    const fallbackResponse = generateLocalMentorResponse(req.body?.pillarId || "feedback", req.body?.messages || [], req.body?.userEnneatype, req.body?.peerEnneatype);
     return res.json({ text: fallbackResponse, webSources: [] });
   }
 });
