@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { PILLARS, PillarConfig, ENNEAGRAM_TYPES, EnneatypeInfo } from "../data/enneagramData";
+import { generateMentorResponse } from "../utils/mentorEngine";
 import { NapoleonHillAvatar } from "./NapoleonHillAvatar";
 import {
   ArrowLeft,
@@ -13,6 +14,9 @@ import {
   AlertTriangle,
   Compass,
   CheckCircle2,
+  Globe,
+  ExternalLink,
+  Search,
 } from "lucide-react";
 
 export interface ChatMessage {
@@ -20,6 +24,7 @@ export interface ChatMessage {
   role: "assistant" | "user";
   content: string;
   timestamp: string;
+  webSources?: Array<{ title: string; uri: string }>;
 }
 
 interface ChatScreenProps {
@@ -83,43 +88,56 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
     setInputText("");
     setIsTyping(true);
 
+    let replyContent = "";
+    let webSources: Array<{ title: string; uri: string }> = [];
+
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 25000);
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           pillarId,
           messages: updatedMessages.map((m) => ({
             role: m.role,
             content: m.content,
           })),
+          userEnneatype,
+          peerEnneatype,
         }),
       });
+      clearTimeout(timeoutId);
 
-      const data = await response.json();
-      const replyContent = data.text || "Compreendido. Vamos avançar com este plano de ação.";
-
-      setTimeout(() => {
-        const assistantMessage: ChatMessage = {
-          id: `assistant-${Date.now()}`,
-          role: "assistant",
-          content: replyContent,
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        };
-        setMessages((prev) => [...prev, assistantMessage]);
-        setIsTyping(false);
-      }, 400);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.text) {
+          replyContent = data.text;
+          if (Array.isArray(data.webSources)) {
+            webSources = data.webSources;
+          }
+        }
+      }
     } catch (error) {
-      console.error("Chat error:", error);
-      setIsTyping(false);
-      const fallbackMsg: ChatMessage = {
-        id: `err-${Date.now()}`,
-        role: "assistant",
-        content: "Houve uma instabilidade na conexão, mas estou aqui com você. Por favor, reformule sua mensagem ou selecione seu padrão de liderança abaixo.",
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      };
-      setMessages((prev) => [...prev, fallbackMsg]);
+      console.warn("Chat request error or timeout:", error);
     }
+
+    // If backend wasn't available or returned empty, use rich client-side MasterMind engine
+    if (!replyContent) {
+      replyContent = generateMentorResponse(pillarId, updatedMessages, userEnneatype, peerEnneatype);
+    }
+
+    const assistantMessage: ChatMessage = {
+      id: `assistant-${Date.now()}`,
+      role: "assistant",
+      content: replyContent,
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      webSources: webSources.length > 0 ? webSources : undefined,
+    };
+    setMessages((prev) => [...prev, assistantMessage]);
+    setIsTyping(false);
   };
 
   // Step 1: User chooses their own Enneatype
@@ -398,7 +416,31 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
 
                 {/* Message Content */}
                 {isAssistant ? (
-                  renderFormattedContent(msg.content)
+                  <>
+                    {renderFormattedContent(msg.content)}
+                    {msg.webSources && msg.webSources.length > 0 && (
+                      <div className="mt-3 pt-2.5 border-t border-neutral-200">
+                        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-neutral-600 mb-1.5">
+                          <Globe className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Referências & Fontes Pesquisadas:</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {msg.webSources.map((source, sIdx) => (
+                            <a
+                              key={sIdx}
+                              href={source.uri}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11px] text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-2 py-0.5 rounded transition-colors"
+                            >
+                              <span className="truncate max-w-[220px]">{source.title || source.uri}</span>
+                              <ExternalLink className="w-2.5 h-2.5 shrink-0" />
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <p className="text-sm text-neutral-100 whitespace-pre-wrap leading-relaxed font-normal">
                     {msg.content}
@@ -415,15 +457,21 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
           );
         })}
 
-        {/* Typing Simulator Indicator */}
+        {/* Typing Simulator Indicator with Dynamic Research status */}
         {isTyping && (
           <div className="flex items-start gap-3 justify-start animate-fadeIn">
             <NapoleonHillAvatar size="sm" className="mt-1" />
-            <div className="bg-white border border-neutral-200 rounded-2xl rounded-tl-xs p-4 text-xs text-neutral-700 shadow-xs flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-red-600 animate-bounce" style={{ animationDelay: "0ms" }} />
-              <span className="w-2 h-2 rounded-full bg-red-600 animate-bounce" style={{ animationDelay: "150ms" }} />
-              <span className="w-2 h-2 rounded-full bg-red-600 animate-bounce" style={{ animationDelay: "300ms" }} />
-              <span className="text-neutral-600 ml-1 font-medium">Napoleon Hill formulando orientação executiva...</span>
+            <div className="bg-white border border-neutral-200 rounded-2xl rounded-tl-xs p-4 text-xs text-neutral-700 shadow-xs flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-bounce" style={{ animationDelay: "0ms" }} />
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-bounce" style={{ animationDelay: "150ms" }} />
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-bounce" style={{ animationDelay: "300ms" }} />
+                <span className="text-neutral-800 font-semibold ml-1">Napoleon Hill elaborando orientação estratégica...</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-neutral-500 pl-1">
+                <Search className="w-3 h-3 text-red-600 animate-pulse" />
+                <span>Pesquisando repertório de liderança, Eneagrama Sistêmico e princípios MasterMind...</span>
+              </div>
             </div>
           </div>
         )}

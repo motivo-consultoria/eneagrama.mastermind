@@ -12,19 +12,33 @@ export const NapoleonHillAvatar: React.FC<NapoleonHillAvatarProps> = ({
   size = "md",
   className = "",
 }) => {
-  // Use user's edited/uploaded custom image if saved, otherwise custom imported portrait, then fallback
-  const [avatarSrc, setAvatarSrc] = useState<string>(() => {
-    return (
-      localStorage.getItem("napoleon_hill_custom_avatar") ||
-      napoleonCustomPortrait ||
-      napoleonDefaultPortrait
-    );
-  });
+  const getInitialAvatar = () => {
+    try {
+      const stored = localStorage.getItem("napoleon_hill_custom_avatar");
+      if (stored && (stored.startsWith("data:image") || stored.startsWith("blob:"))) {
+        return stored;
+      }
+      if (stored && stored.startsWith("/")) {
+        localStorage.removeItem("napoleon_hill_custom_avatar");
+      }
+    } catch {
+      // ignore
+    }
+    return napoleonCustomPortrait || napoleonDefaultPortrait;
+  };
+
+  const [avatarSrc, setAvatarSrc] = useState<string>(getInitialAvatar);
 
   useEffect(() => {
-    const stored = localStorage.getItem("napoleon_hill_custom_avatar");
-    if (stored) {
-      setAvatarSrc(stored);
+    try {
+      const stored = localStorage.getItem("napoleon_hill_custom_avatar");
+      if (stored && (stored.startsWith("data:image") || stored.startsWith("blob:"))) {
+        setAvatarSrc(stored);
+      } else {
+        setAvatarSrc(napoleonCustomPortrait || napoleonDefaultPortrait);
+      }
+    } catch {
+      setAvatarSrc(napoleonCustomPortrait || napoleonDefaultPortrait);
     }
   }, []);
 
@@ -43,10 +57,7 @@ export const NapoleonHillAvatar: React.FC<NapoleonHillAvatarProps> = ({
       <img
         src={avatarSrc}
         onError={() => {
-          // Fallbacks in order: custom portrait -> default portrait -> bundled svg
-          if (avatarSrc !== napoleonCustomPortrait) {
-            setAvatarSrc(napoleonCustomPortrait);
-          } else if (avatarSrc !== napoleonDefaultPortrait) {
+          if (avatarSrc !== napoleonDefaultPortrait) {
             setAvatarSrc(napoleonDefaultPortrait);
           } else if (avatarSrc !== napoleonFallbackSvg) {
             setAvatarSrc(napoleonFallbackSvg);

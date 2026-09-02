@@ -231,42 +231,101 @@ Para desenhar sua bússola diária:
 *Entregarei uma pílula de sabedoria sob medida e seu desafio de liderança de 24 horas.*`;
 }
 
+// Helper to format conversation turns properly for Gemini API (ensures alternating turns and starting with user)
+function prepareGeminiContents(messages: Array<{ role: string; content: string }>) {
+  const formatted: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
+
+  for (const m of messages) {
+    if (!m.content || !m.content.trim()) continue;
+    const role: "user" | "model" = m.role === "assistant" ? "model" : "user";
+
+    // If starting and it's a model message, skip it (system instruction already handles persona)
+    if (formatted.length === 0 && role === "model") {
+      continue;
+    }
+
+    // Merge consecutive turns with the same role to adhere strictly to alternating turn constraint
+    if (formatted.length > 0 && formatted[formatted.length - 1].role === role) {
+      formatted[formatted.length - 1].parts[0].text += `\n\n${m.content}`;
+    } else {
+      formatted.push({
+        role,
+        parts: [{ text: m.content }],
+      });
+    }
+  }
+
+  if (formatted.length === 0) {
+    formatted.push({
+      role: "user",
+      parts: [{ text: "Olá Napoleon Hill. Como mentor MasterMind, apresente-se e oriente minha liderança." }],
+    });
+  }
+
+  return formatted;
+}
+
 // API Chat Endpoint
 app.post("/api/chat", async (req, res) => {
   try {
-    const { pillarId, messages } = req.body;
+    const { pillarId, messages, userEnneatype, peerEnneatype } = req.body;
     const ai = getAI();
 
     if (!ai) {
-      // Use rich deterministic MasterMind logic
+      // Use rich deterministic MasterMind logic if no API key is available
       const fallbackResponse = generateLocalMentorResponse(pillarId, messages);
-      return res.json({ text: fallbackResponse });
+      return res.json({ text: fallbackResponse, webSources: [] });
     }
 
     const pillar = PILLARS[pillarId] || PILLARS.feedback;
+    const contents = prepareGeminiContents(messages || []);
 
-    // Build conversation contents for Gemini
-    const contents = messages.map((m: { role: string; content: string }) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }],
-    }));
+    const userTypeStr = userEnneatype ? `Eneatipo do Líder: Tipo ${userEnneatype} (${ENNEAGRAM_TYPES[userEnneatype]?.name || ""})` : "Eneatipo do Líder a ser inferido da conversa";
+    const peerTypeStr = peerEnneatype ? `Eneatipo do Liderado/Interlocutor: Tipo ${peerEnneatype} (${ENNEAGRAM_TYPES[peerEnneatype]?.name || ""})` : "Eneatipo do interlocutor a ser inferido se aplicável";
+
+    const systemInstruction = `${SYSTEM_PROMPT}
+
+PILAR ATUAL: ${pillar.badge} - ${pillar.title}
+DESCRIÇÃO: ${pillar.description}
+${userTypeStr}
+${peerTypeStr}
+
+DIRETRIZ DE PESQUISA & ATIVIDADE DINÂMICA:
+- Você tem acesso à ferramenta de pesquisa Google Search para enriquecer suas análises com dados, exemplos de liderança contemporânea, fundamentos dos livros de Napoleon Hill e referências comportamentais robustas.
+- Elabore respostas profundas, dinâmicas, estruturadas com clareza executiva, dividindo em seções claras (Diagnóstico do Padrão, Mecânica Comportamental, Roteiro Prático de Palavras Exatas e Princípio MasterMind).`;
 
     const response = await ai.models.generateContent({
       model: "gemini-3.7-flash",
       contents,
       config: {
-        systemInstruction: `${SYSTEM_PROMPT}\n\nPILAR ATUAL: ${pillar.badge} - ${pillar.title}\nCONTEXTO: ${pillar.description}`,
+        systemInstruction,
         temperature: 0.7,
+        tools: [{ googleSearch: {} }],
       },
     });
 
     const responseText = response.text || "Não foi possível gerar a resposta no momento.";
-    return res.json({ text: responseText });
+
+    // Extract grounding web search citations if available
+    const searchChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
+    const webSources: Array<{ title: string; uri: string }> = [];
+    if (searchChunks && Array.isArray(searchChunks)) {
+      for (const chunk of searchChunks) {
+        if (chunk?.web?.uri) {
+          webSources.push({
+            title: chunk.web.title || chunk.web.uri,
+            uri: chunk.web.uri,
+          });
+        }
+      }
+    }
+
+    return res.json({ text: responseText, webSources });
   } catch (error: any) {
     console.error("Gemini API Error in /api/chat:", error);
     // Graceful fallback to rich local logic on error
     const fallbackResponse = generateLocalMentorResponse(req.body?.pillarId || "feedback", req.body?.messages || []);
-    return res.json({ text: fallbackResponse });
+    return res.json({ text: fallbackResponse, webSources: [] });
   }
 });
 

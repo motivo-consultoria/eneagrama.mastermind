@@ -13,15 +13,36 @@ export const MasterMindLogo: React.FC<LogoProps> = ({
   showSubtitle = true,
   className = "",
 }) => {
-  const [logoSrc, setLogoSrc] = useState<string>(() => {
-    return localStorage.getItem("mastermind_uploaded_logo") || defaultLogoPng;
-  });
+  const getInitialLogo = () => {
+    try {
+      const stored = localStorage.getItem("mastermind_uploaded_logo");
+      if (stored && (stored.startsWith("data:image") || stored.startsWith("blob:"))) {
+        return stored;
+      }
+      // Remove any legacy stale relative path from localStorage
+      if (stored && stored.startsWith("/")) {
+        localStorage.removeItem("mastermind_uploaded_logo");
+      }
+    } catch {
+      // ignore
+    }
+    return defaultLogoPng;
+  };
+
+  const [logoSrc, setLogoSrc] = useState<string>(getInitialLogo);
 
   useEffect(() => {
-    // If local logo is updated in another component
     const handleStorage = () => {
-      const stored = localStorage.getItem("mastermind_uploaded_logo");
-      if (stored) setLogoSrc(stored);
+      try {
+        const stored = localStorage.getItem("mastermind_uploaded_logo");
+        if (stored && (stored.startsWith("data:image") || stored.startsWith("blob:"))) {
+          setLogoSrc(stored);
+        } else {
+          setLogoSrc(defaultLogoPng);
+        }
+      } catch {
+        setLogoSrc(defaultLogoPng);
+      }
     };
     window.addEventListener("logo_updated", handleStorage);
     return () => window.removeEventListener("logo_updated", handleStorage);
@@ -56,11 +77,9 @@ export const MasterMindLogo: React.FC<LogoProps> = ({
     <div
       className={`inline-flex flex-col items-center justify-center select-none bg-white rounded-2xl ${current.padding} ${className}`}
     >
-      {/* 100% Exact 1:1 Image Rendering (Bundled Asset) */}
       <img
         src={logoSrc}
         onError={() => {
-          // Fallback to SVG if PNG fails
           if (logoSrc !== fallbackLogoSvg) {
             setLogoSrc(fallbackLogoSvg);
           }
