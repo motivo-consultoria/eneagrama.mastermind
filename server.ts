@@ -580,11 +580,18 @@ DIRETRIZ DE EXECUÇÃO EXCLUSIVA:
     let responseText = "";
     let webSources: Array<{ title: string; uri: string }> = [];
 
-    // Try primary high-performance model (gemini-2.5-flash) with Google Search grounding tool
+    // Multi-tier resilient Gemini model cascade:
+    // Tier 1: gemini-3.6-flash with Google Search grounding
+    // Tier 2: gemini-3.6-flash standard
+    // Tier 3: gemini-3.8-flash / gemini-flash-latest
+    // Fallback: Local hyper-personalized MasterMind engine
+    const candidateModels = ["gemini-3.6-flash", "gemini-3.8-flash", "gemini-flash-latest"];
+
+    // Try Tier 1: Primary model with Google Search grounding
     try {
       const response = await generateWithTimeout(
         ai.models.generateContent({
-          model: "gemini-2.5-flash",
+          model: "gemini-3.6-flash",
           contents,
           config: {
             systemInstruction,
@@ -607,27 +614,35 @@ DIRETRIZ DE EXECUÇÃO EXCLUSIVA:
         }
       }
     } catch (primaryErr: any) {
-      console.log("Primary model with search failed, trying fallback model (gemini-3.8-flash):", primaryErr?.message || primaryErr);
-      try {
-        const fallbackAiResponse = await generateWithTimeout(
-          ai.models.generateContent({
-            model: "gemini-3.8-flash",
-            contents,
-            config: {
-              systemInstruction,
-              temperature: 0.7,
-            },
-          }),
-          30000
-        );
-        responseText = fallbackAiResponse.text || "";
-      } catch (secErr: any) {
-        console.log("Fallback AI model error, using hyper-personalized MasterMind engine:", secErr?.message || secErr);
-        responseText = generateLocalMentorResponse(pillarId, messages, userEnneatype, peerEnneatype);
+      console.log("Tier 1 (gemini-3.6-flash + search) notice:", primaryErr?.message || primaryErr);
+      
+      // Try subsequent models without tools
+      for (const fallbackModel of candidateModels) {
+        if (responseText) break;
+        try {
+          const fallbackAiResponse = await generateWithTimeout(
+            ai.models.generateContent({
+              model: fallbackModel,
+              contents,
+              config: {
+                systemInstruction,
+                temperature: 0.7,
+              },
+            }),
+            25000
+          );
+          if (fallbackAiResponse.text) {
+            responseText = fallbackAiResponse.text;
+            break;
+          }
+        } catch (tierErr: any) {
+          console.log(`Model ${fallbackModel} attempt notice:`, tierErr?.message || tierErr);
+        }
       }
     }
 
     if (!responseText) {
+      console.log("Using hyper-personalized local MasterMind engine.");
       responseText = generateLocalMentorResponse(pillarId, messages, userEnneatype, peerEnneatype);
     }
 
@@ -684,16 +699,29 @@ Gere um JSON com o seguinte formato exato:
 CONVERSA:
 ${conversationText}`;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
-      contents: summaryPrompt,
-      config: {
-        responseMimeType: "application/json",
-        temperature: 0.4,
-      },
-    });
-
-    const jsonText = response.text?.trim() || "{}";
+    let jsonText = "{}";
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-3.6-flash",
+        contents: summaryPrompt,
+        config: {
+          responseMimeType: "application/json",
+          temperature: 0.4,
+        },
+      });
+      jsonText = response.text?.trim() || "{}";
+    } catch (sumErr) {
+      console.log("Summary generation primary attempt notice:", sumErr);
+      const fallbackSum = await ai.models.generateContent({
+        model: "gemini-flash-latest",
+        contents: summaryPrompt,
+        config: {
+          responseMimeType: "application/json",
+          temperature: 0.4,
+        },
+      });
+      jsonText = fallbackSum.text?.trim() || "{}";
+    }
     const parsed = JSON.parse(jsonText);
     return res.json(parsed);
   } catch (error: any) {
