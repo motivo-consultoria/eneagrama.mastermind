@@ -81,19 +81,40 @@ function getAI(): GoogleGenAI | null {
 }
 
 const SYSTEM_PROMPT = `
-Você é Napoleon Hill, mentor de alta performance e liderança executiva da Fundação Napoleon Hill (MasterMind), integrando os ensinamentos da Lei do Triunfo, a atitude mental positiva e a metodologia dos 9 Padrões-Master do Eneagrama Sistêmico Vitruviano.
+Você é Napoleon Hill, mentor de alta performance e liderança executiva da Fundação Napoleon Hill (MasterMind), integrando os ensinamentos da Lei do Triunfo, a Atitude Mental Positiva e a metodologia dos 9 Padrões-Master do Eneagrama Sistêmico Vitruviano.
 
 DIRETRIZES FUNDAMENTAIS & VOCABULÁRIO OBRIGATÓRIO:
 1. TERMINOLOGIA OBRIGATÓRIA:
    - NUNCA use as palavras "eneatipo", "eneatipos", "tipo eneagramático" ou semelhantes.
    - USE SEMPRE "Padrão-Master", "padrão-master", "Padrões-Master" ou "Padrão X" (ex: "Padrão-Master 1", "Padrão-Master 8").
-2. Identidade & Tom de Voz: Fale com a sabedoria, autoridade magnânima, visão prática e incentivo edificante de Napoleon Hill. Seja direto, profundo e focado em resultados executivos e autodomínio.
+2. Identidade & Tom de Voz: Fale com a sabedoria magnânima, visão prática, presença executiva e incentivo edificante de Napoleon Hill. Seja direto, profundo, humano e focado em resultados reais e autodomínio.
 3. Axioma MasterMind Central: No MasterMind, o líder "NÃO É o seu padrão, ele SE ENCONTRA em um determinado padrão". A evolução do líder decorre de superar o Vício Emocional e acessar deliberadamente a sua Virtude Mestra.
 
-REGRA DE OURO DE HIPER-PERSONALIZAÇÃO (CRUCIAL):
-- É TERMINANTEMENTE PROIBIDO emitir respostas padronizadas, genéricas ou reutilizar respostas idênticas para situações diferentes do mesmo padrão.
-- Para cada consulta, dedique pensamento profundo para analisar as variáveis e nuances singulares do caso: o contexto do negócio, o impacto financeiro/operacional, os sentimentos em jogo, os prazos, o histórico relatado e a dinâmica entre os Padrões-Master.
-- Cada roteiro, fala recomendada, diagnóstico e desafio de 24h deve incorporar DIRETAMENTE os fatos, palavras e pessoas descritos pelo usuário.
+REGRA DE OURO DA MENTORIA MASTERMIND: REFLEXÃO PROFUNDA, ESPELHAMENTO E PERSONALIZAÇÃO TOTAL
+- É TERMINANTEMENTE PROIBIDO emitir respostas padronizadas, clichês ou reutilizar a mesma estrutura para tópicos diferentes.
+- Cada líder que busca sua orientação traz uma realidade singular (seja conduzir um treinamento de gestão de mudança, alinhar finanças em família com a esposa, resolver um impasse com um sócio, dar feedback para um especialista técnico arrogante ou apresentar ao conselho).
+- Demonstre domínio profundo dos termos técnicos, metodologias e contextos citados (pesquise e aprofunde o significado real de cada conceito).
+
+ESTRUTURA OBRIGATÓRIA DE CADA RESPOSTA:
+
+PASSO 1: ESPELHAMENTO EMPÁTICO & CONEXÃO GENUÍNA (Acolhimento da Realidade do Líder)
+- Inicie OBRIGATORIAMENTE validando e espelhando com profunda sensibilidade e precisão o desafio real trazido pelo usuário.
+- Demonstre que você ouviu e compreendeu a dor, a complexidade e o que está em jogo (as emoções, as pressões, os riscos e as relações humanas envolvidas).
+
+PASSO 2: ANÁLISE DE CONTEXTO & DOMÍNIO DOS TERMOS CITADOS
+- Incorpore com maestria os conceitos específicos mencionados (ex: dinâmicas de Gestão de Mudança, alinhamento orçamentário do casal, governança societária, postura em reuniões BNI, condução de 1on1s, etc.).
+
+PASSO 3: DIAGNÓSTICO DO PADRÃO-MASTER NO CASO CONCRETO & GATILHOS A EVITAR
+- Explique exatamente como o Padrão-Master do Líder tende a reagir sob pressão neste caso específico (a armadilha do seu vício emocional).
+- Se houver outra pessoa envolvida, analise a reação do Padrão-Master dela e liste de 2 a 3 gatilhos emocionais/verbais que devem ser evitados a todo custo.
+- Mostre como a Virtude Mestra do Líder é a chave para destravar a melhor solução.
+
+PASSO 4: ROTEIRO CIRÚRGICO / PLANO PRÁTICO COM PALAVRAS EXATAS
+- Forneça falas recomendadas, perguntas estratégicas e passos desenhados EXCLUSIVAMENTE para a situação relatada pelo usuário.
+
+PASSO 5: PRINCÍPIO MASTERMIND DE NAPOLEON HILL & DESAFIO DE 24 HORAS
+- Citação inspiradora de Napoleon Hill diretamente conectada ao tema.
+- Um desafio prático e mensurável para o líder aplicar hoje.
 
 Base teórica dos 9 Padrões-Master:
 - Padrão-Master 1 (Perfeccionista / Ética e Perfeição): Virtude: Serenidade e Discernimento. Vício: Raiva reprimida / Ressentimento. Ferida: Traição / Imperfeição.
@@ -107,34 +128,8 @@ Base teórica dos 9 Padrões-Master:
 - Padrão-Master 9 (Mediador / Paz e União): Virtude: Ação Correta, Diligência e Posicionamento. Vício: Indolência / Esquecimento de si. Ferida: Separação / Conflito.
 
 DELIMITAÇÃO DE ESCOPO:
-- Esta mentoria é estritamente dedicada a: Liderança, Inteligência Emocional, Padrões-Master do Eneagrama Sistêmico, Filosofia MasterMind / Leis do Triunfo de Napoleon Hill, Gestão de Pessoas, Conflitos e Decisão Executiva.
-- Se o usuário fugir desse escopo (pedir piadas, códigos, receitas, futebol, etc.), recuse polidamente e convide-o a retornar ao propósito definido da mentoria.
-
-ESTRUTURA DE RESPOSTA POR PILAR:
-
-1. PILAR 1: ASSISTENTE DE FEEDBACK ESTRATÉGICO
-   Quando tiver o Padrão-Master do líder, o Padrão-Master do liderado e a situação concreta:
-   - **Diagnóstico da Dinâmica Relacional**: Analise como a virtude/vício do líder interage com a fixação e o mecanismo de defesa do liderado especificamente na situação descrita.
-   - **Gatilhos Emocionais a Evitar**: Liste 2 a 3 reações ou palavras que acionariam a defensiva imediata daquele liderado naquele contexto.
-   - **Roteiro Cirúrgico de 3 Passos (com Palavras Exatas Personalizadas para o Caso)**:
-     * *Passo 1 (Rapport e Intenção Positiva)*: Frase de abertura sob medida para desarmar o liderado.
-     * *Passo 2 (Apresentação de Fatos & Impacto)*: Frase citando o fato exato descrito pelo usuário, sem julgamento moral, focada em impacto e responsabilidade.
-     * *Passo 3 (Pacto de Ação & Compromisso Mútuo)*: Pergunta estratégica que evoca a virtude do liderado para gerar plano de ação concreto.
-   - **Princípio MasterMind de Napoleon Hill**: Citação profunda conectada ao aprendizado dessa conversa.
-
-2. PILAR 2: SOS INTELIGÊNCIA EMOCIONAL
-   Quando tiver o Padrão-Master do líder e a situação de estresse/crise:
-   - **Diagnóstico do Padrão sob Pressão**: Explique com precisão cirúrgica qual vício emocional e distorção perceptiva foi ativada por aquele incidente específico.
-   - **2 Ações Práticas e Imediatas de Autodomínio**: Ações sob medida para o incidente ocorrido, para serem executadas nos próximos minutos.
-   - **Atitude Mental de Cura Napoleon Hill**: Afirmação/pensamento restaurador customizado para a situação relatada.
-   - **Exercício de Centralização Fisiológica**: Respiração com foco na transição do vício para a virtude mestra.
-
-3. PILAR 3: BÚSSOLA DIÁRIA DE VIRTUDES
-   Quando tiver o Padrão-Master do líder e a agenda/desafio do dia:
-   - **Contextualização Profunda da Atividade**: Demonstre domínio das particularidades do evento/reunião mencionado (BNI, 1on1, Diretoria, Negociação, Apresentação, etc.).
-   - **Cruzamento Estratégico com o Padrão-Master**: Analise onde o líder pode brilhar e onde mora o risco oculto do seu vício comportamental nessa atividade.
-   - **Pílula de Sabedoria Napoleon Hill**: Princípio da Lei do Triunfo focado na atividade do dia.
-   - **Desafio Prático de Liderança de 24 Horas**: Meta comportamental concreta, mensurável e personalizada para ser executada hoje durante a atividade.
+- Esta mentoria é estritamente dedicada a: Liderança, Inteligência Emocional, Padrões-Master do Eneagrama Sistêmico, Filosofia MasterMind / Leis do Triunfo de Napoleon Hill, Gestão de Pessoas, Conflitos e Decisão Executiva (inclusive alinhamentos de vida pessoal e familiar de alto impacto para a liderança).
+- Se o usuário pedir receitas, códigos de programação, piadas, futebol ou astrologia, recuse polidamente e convide-o a retornar ao propósito definido da mentoria.
 
 Sempre responda em Português do Brasil com impecável formatação Markdown (títulos, negritos estratégicos, citações em bloco elegantes).
 `;
@@ -178,37 +173,61 @@ Não é possível avançar em conversas ou solicitações que fujam do escopo do
 Por favor, compartilhe um **desafio de liderança**, uma **situação concreta com sua equipe** ou um **contexto de tomada de decisão** para continuarmos sua mentoria com foco e excelência.`;
 }
 
-// Helper to extract situation keywords and context for dynamic response customization
+// Deep situational context analyzer for executive mentorship
 function analyzeSituationContext(text: string) {
   const lower = text.toLowerCase();
-  
-  const isDelay = /(atras|prazo|entrega|data limite|cronograma|demora)/i.test(lower);
-  const isConflict = /(conflito|discuss|briga|desacordo|atrito|ego|clima pesado|grito|desrespeit)/i.test(lower);
-  const isPerformance = /(meta|resultado|desempenho|vendas|produtividade|atingir|n[ãa]o bateu)/i.test(lower);
-  const isDemotivation = /(desmotiva|desengaj|desanim|ap[aá]tico|n[ãa]o se importa|falta de vontade|isolad)/i.test(lower);
-  const isError = /(erro|falha|grave|preju[ií]zo|reclam|cliente insatisfeito|recal|retrabalho)/i.test(lower);
-  const isCareer = /(promo[cç][aã]o|sal[aá]rio|cargo|demiss|demitir|desligar|carreira|feedback anual)/i.test(lower);
-  const isCrisis = /(crise|cancel|perda|processo|emerg[eê]ncia|p[aâ]nico|s[oó]cio|urgente)/i.test(lower);
+
+  const isChangeManagement = /(gest[aã]o da mudan[cç]a|gestao da mudanca|mudan[cç]a|transforma[cç][aã]o|treinamento|workshop|capacita[cç][aã]o|novo processo|resist[eê]ncia|cultura|ado[cç][aã]o)/i.test(lower);
+  const isFamilyFinances = /(finan[cç]as?|esposa|marido|c[oô]njuge|casamento|casa|or[cç]amento|dinheiro|gastos|investimento|d[ií]vida|contas|economia)/i.test(lower) && /(esposa|marido|c[oô]njuge|casal|casa|fam[ií]lia|filhos)/i.test(lower);
+  const isPartnerConflict = /(s[oó]cio|sociedade|equity|cotas|participa[cç][aã]o societ[aá]ria|divis[aã]o de tarefas|acordo de s[oó]cios|alian[cç]a societ[aá]ria)/i.test(lower);
+  const isTechSenior = /(desenvolvedor|programador|dev|tech lead|engenheiro|arrogante|s[eê]nior|t[eé]cnico|compet[eê]ncia t[eé]cnica|ego|juniores|junior)/i.test(lower);
+  const isBNI = /(bni|business network|pitch|refer[eê]ncias|givers gain|60 segundos|30 segundos|networking)/i.test(lower);
+  const isOneOnOne = /(1on1|one on one|um a um|alinhamento individual|conversa individual|pdi)/i.test(lower);
+  const isBoardMeeting = /(conselho|board|diretoria|investidores|assembleia|apresenta[cç][aã]o executiva)/i.test(lower);
+  const isContractLossOrCrisis = /(perdi um contrato|perda de contrato|500k|preju[ií]zo|cancelamento|cliente cancelou|crise grave|emerg[eê]ncia|erro grave)/i.test(lower);
+  const isSalesNegotiation = /(negocia[cç][aã]o|vendas|proposta comercial|fechamento|obje[cç][aã]o|pre[cç]o|desconto)/i.test(lower);
+  const isFiringHiring = /(demitir|demiss[aã]o|desligar|desligamento|contrata[cç][aã]o|admitir|entrevista)/i.test(lower);
+  const isDemotivation = /(desmotiva|desengaj|desanim|ap[aá]tico|falta de vontade|isolad|clima pesado)/i.test(lower);
+  const isDelay = /(atras|prazo|entrega|data limite|cronograma|demora|deadline)/i.test(lower);
+  const isConflict = /(conflito|discuss|briga|desacordo|atrito|ego|grito|desrespeit)/i.test(lower);
+  const isError = /(erro|falha|grave|reclam|cliente insatisfeito|retrabalho)/i.test(lower);
+  const isPerformance = /(meta|resultado|desempenho|produtividade|atingir|n[ãa]o bateu)/i.test(lower);
 
   let situationTheme = "alinhamento executivo e desenvolvimento de equipe";
-  if (isDelay) situationTheme = "cumprimento de prazos e disciplina operacional";
+  if (isChangeManagement) situationTheme = "treinamento e condução de Gestão da Mudança";
+  else if (isFamilyFinances) situationTheme = "alinhamento financeiro familiar e de casal";
+  else if (isPartnerConflict) situationTheme = "alinhamento de sociedade e governança entre sócios";
+  else if (isTechSenior) situationTheme = "feedback comportamental para especialista técnico sênior";
+  else if (isBNI) situationTheme = "apresentação estratégica e networking estruturado BNI";
+  else if (isOneOnOne) situationTheme = "reunião 1on1 de desenvolvimento individual";
+  else if (isBoardMeeting) situationTheme = "apresentação executiva para Conselho / Diretoria";
+  else if (isContractLossOrCrisis) situationTheme = "gerenciamento de crise aguda e recuperação de confiança";
+  else if (isSalesNegotiation) situationTheme = "negociação comercial e defesa de proposta de valor";
+  else if (isFiringHiring) situationTheme = "condução de transição de equipe / desligamento ético";
+  else if (isDelay) situationTheme = "cumprimento de prazos e disciplina operacional";
   else if (isConflict) situationTheme = "gestão de atritos interpessoais e alinhamento de postura";
-  else if (isError) situationTheme = "correção de falha operacional e mitigação de riscos";
+  else if (isError) situationTheme = "correção de falha operacional e contenção de danos";
   else if (isPerformance) situationTheme = "atingimento de metas e elevação da régua de resultados";
   else if (isDemotivation) situationTheme = "resgate do engajamento e propósito de trabalho";
-  else if (isCareer) situationTheme = "alinhamento de expectativas e decisões de carreira/equipe";
-  else if (isCrisis) situationTheme = "gerenciamento de crise aguda e contenção de danos";
 
   return {
     theme: situationTheme,
+    isChangeManagement,
+    isFamilyFinances,
+    isPartnerConflict,
+    isTechSenior,
+    isBNI,
+    isOneOnOne,
+    isBoardMeeting,
+    isContractLossOrCrisis,
+    isSalesNegotiation,
+    isFiringHiring,
     isDelay,
     isConflict,
     isPerformance,
     isDemotivation,
     isError,
-    isCareer,
-    isCrisis,
-    rawExtract: text.replace(/\n/g, " ").trim().slice(0, 160)
+    rawExtract: text.replace(/\n/g, " ").trim().slice(0, 200)
   };
 }
 
@@ -244,50 +263,84 @@ function generateLocalMentorResponse(
   const leaderInfo = ENNEAGRAM_TYPES[resolvedUserType] || ENNEAGRAM_TYPES[1];
   const peerInfo = resolvedPeerType ? ENNEAGRAM_TYPES[resolvedPeerType] : null;
 
-  const sitAnalysis = analyzeSituationContext(conversationText + " " + lastUserMsg);
+  const sit = analyzeSituationContext(conversationText + " " + lastUserMsg);
 
+  // ==========================================
+  // PILAR 1: FEEDBACK ESTRATÉGICO
+  // ==========================================
   if (pillarId === "feedback") {
     if (peerInfo) {
-      // Dynamic tailored wording according to the specific situation
-      let specificOpening = `"Quero começar reconhecendo seu papel e dedicação no time. Nosso propósito neste alinhamento é tratar de um ponto específico sobre ${sitAnalysis.theme}, para que possamos proteger nossos resultados e elevar sua performance com total respeito e parceria."`;
-      let specificFact = `"Em relação ao episódio recente (*'${sitAnalysis.rawExtract || "as últimas entregas e interações"}'*), identifiquei impactos que demandam nossa intervenção imediata. Gostaria de ouvir primeiramente: como você avalia esse cenário e os desdobramentos que ele gerou?"`;
-      let specificAction = `"Conectando com o seu potencial e a sua virtude de ${peerInfo.virtue}, qual é a sua proposta prática para recalibrarmos isso imediatamente? Quero que definamos um pacto claro de acompanhamento a partir de hoje."`;
+      let mirroring = "";
+      let specificOpening = "";
+      let specificFact = "";
+      let specificAction = "";
+      let customNapoleonQuote = `"A cooperação voluntária não se obtém por imposição ou intimidação, mas pelo despertar do propósito nobre na mente do seu liderado." — Napoleon Hill`;
+      let customChallenge = `Conduzir a conversa estruturada aplicando a virtude da ${leaderInfo.virtue}, mantendo escuta ativa em 70% do tempo.`;
 
-      if (sitAnalysis.isDelay) {
-        specificOpening = `"Valorizo a sua capacidade e o volume de demandas sob sua responsabilidade. Quero alinhar um ponto vital de compromisso e pontualidade sobre os nossos prazos."`;
-        specificFact = `"Ao analisarmos o cronograma da situação (*'${sitAnalysis.rawExtract}'*), o atraso impactou o fluxo da equipe. O que exatamente causou esse gargalo e como podemos blindar os próximos prazos?"`;
-      } else if (sitAnalysis.isConflict) {
-        specificOpening = `"Tenho grande consideração por você e pelo ambiente de trabalho que construímos. Esta conversa tem o objetivo exclusivo de zelar pela nossa sinergia e postura de alto nível."`;
-        specificFact = `"Sobre a divergência recente (*'${sitAnalysis.rawExtract}'*), a forma como a situação foi conduzida gerou tensão no grupo. Como podemos estabelecer um padrão de comunicação mais colaborativo e maduro?"`;
-      } else if (sitAnalysis.isError) {
-        specificOpening = `"Erros em processos complexos acontecem, mas o que diferencia os profissionais extraordinários é a rapidez na correção e a responsabilidade de assumir o plano de contenção."`;
-        specificFact = `"Sobre a falha ocorrida (*'${sitAnalysis.rawExtract}'*), precisamos mapear a causa-raiz sem rodeios e assegurar que ela não se repita. Qual é o seu diagnóstico do que faltou checar?"`;
+      if (sit.isChangeManagement) {
+        mirroring = `Compreendo profundamente a relevância e o peso deste momento. Conduzir um treinamento de **Gestão da Mudança** não é apenas transmitir novos processos ou metodologias: é gerenciar a ansiedade humana frente ao desconhecido. Quando as pessoas resistem à mudança, elas não estão necessariamente rejeitando o projeto — estão expressando o medo de perder relevância, autoridade ou segurança.`;
+        specificOpening = `"Quero iniciar reconhecendo o valor do seu trabalho e a importância que você tem para a nossa equipe. Sei que momentos de transição geram dúvidas e inseguranças legítimas, e nosso objetivo aqui é construir esse caminho juntos com total transparência."`;
+        specificFact = `"Ao implementarmos este novo processo (*'${sit.rawExtract}'*), notei que surgiram ruídos e resistências na adoção. Gostaria de ouvir genuinamente de você: quais são os maiores desafios que você e o time estão enxergando na prática?"`;
+        specificAction = `"Conectando com a sua virtude de ${peerInfo.virtue}, como podemos transformar você em um embaixador dessa nova fase, garantindo que o time se sinta acolhido e capacitado para vencer essa transição?"`;
+        customNapoleonQuote = `"Quem não consegue liderar a si mesmo diante da incerteza jamais conseguirá guiar outras pessoas através dos ventos da mudança." — Napoleon Hill`;
+        customChallenge = `Antes do treinamento, faça um alinhamento prévio de 15 minutos com os influenciadores-chave da equipe para mapear suas principais dores e acolhê-las na apresentação.`;
+      } else if (sit.isFamilyFinances) {
+        mirroring = `Reconheço a sensibilidade, a nobreza e a vulnerabilidade dessa situação. Conversas sobre finanças no casamento vão muito além de planilhas e extratos bancários: tocam diretamente em segurança emocional, sonhos compartilhados, estilos de vida e receios individuais. Poucos diálogos exigem tanta delicadeza, cumplicidade e ausência de tom inquisitivo.`;
+        specificOpening = `"Quero ter uma conversa de coração aberto sobre o nosso futuro e os nossos sonhos como casal. O dinheiro para nós deve ser um instrumento de liberdade e paz, e quero que construamos juntos um plano em que ambos se sintam seguros e felizes."`;
+        specificFact = `"Analisando nossos projetos e o momento atual (*'${sit.rawExtract}'*), sinto que precisamos calibrar nossas prioridades para que nenhum dos dois se sinta sobrecarregado ou privado. Como você enxerga nosso orçamento e o que podemos ajustar com serenidade?"`;
+        specificAction = `"Que tal definirmos três objetivos comuns para os próximos meses — como uma reserva de tranquilidade e um projeto de lazer para nós — e estabelecermos um pacto mensal de acompanhamento leve e sem cobranças mútuas?"`;
+        customNapoleonQuote = `"A harmonia no lar e a comunhão de propósitos são os alicerces mais sólidos sobre os quais um líder constrói sua verdadeira riqueza." — Napoleon Hill`;
+        customChallenge = `Agendar um jantar ou café tranquilo exclusivamente para sonhar juntos com as metas da família antes de abrir planilhas financeiras.`;
+      } else if (sit.isPartnerConflict) {
+        mirroring = `Compreendo a complexidade e a gravidade de alinhar expectativas com um sócio. Uma sociedade de negócios é um pacto de confiança comparável a um casamento corporativo. Quando surgem desalinhamentos de entrega ou visão, a empresa inteira sofre a oscilação de comando.`;
+        specificOpening = `"Tenho imenso respeito pela nossa jornada de sociedade e pelo que construímos até aqui. Esta conversa visa blindar o futuro da nossa empresa e assegurar que nossa aliança MasterMind continue forte e equilibrada."`;
+        specificFact = `"Em relação aos nossos acordos recentes (*'${sit.rawExtract}'*), vejo que a divisão de responsabilidades e as entregas acordadas não estão no nível necessário para a sustentabilidade do negócio. Como você avalia a sua dedicação atual e os gargalos enfrentados?"`;
+        specificAction = `"Para restabelecermos o equilíbrio e a virtude da ${peerInfo.virtue} na sociedade, quais compromissos claros e mensuráveis assumimos hoje quanto a papéis, prazos e prestação de contas mútua?"`;
+        customNapoleonQuote = `"Uma aliança MasterMind só sobrevive quando há perfeita harmonia de propósitos, transparência absoluta e dedicação equitativa entre as partes." — Napoleon Hill`;
+        customChallenge = `Redigir uma matriz de papéis e responsabilidades (RACI) objetiva para validação formal entre os sócios nas próximas 24 horas.`;
+      } else if (sit.isTechSenior) {
+        mirroring = `Reconheço esse desafio clássico da liderança técnica: como lapidar um profissional de altíssimo domínio técnico cujo comportamento arrogante ou impaciente contamina o desenvolvimento dos profissionais juniores e fragiliza a cultura da equipe.`;
+        specificOpening = `"Admiro profundamente o seu domínio técnico e a qualidade do seu código/arquitetura. Nosso objetivo neste feedback é elevar sua liderança e influência positiva sobre todo o ecossistema do time."`;
+        specificFact = `"Observei em interações recentes (*'${sit.rawExtract}'*) posturas que desestimulam os membros mais jovens a perguntar e colaborar. Quando um sênior responde de forma áspera, o time recua e para de inovar. Como você percebe o impacto das suas palavras no crescimento deles?"`;
+        specificAction = `"Com a virtude de ${peerInfo.virtue}, o que você acha de assumir formalmente a mentoria de um dos juniores por 30 dias, praticando uma postura pedagógica e paciente?"`;
+        customNapoleonQuote = `"O verdadeiro poder de um especialista não reside no quanto ele sabe, mas na sua capacidade de elevar os que estão ao seu redor." — Napoleon Hill`;
+        customChallenge = `Criar uma regra de ouro para a equipe técnica: 'Nenhuma dúvida técnica é óbvia; cada pergunta é uma oportunidade de mentoria coletiva'.`;
+      } else {
+        mirroring = `Compreendo com clareza os contornos e o impacto do desafio que você trouxe à tona (*'${sit.rawExtract}'*). Liderar com sabedoria exige enxergar além da superfície do problema e tratar a causa-raiz com equilíbrio emocional e autoridade moral.`;
+        specificOpening = `"Quero começar reconhecendo seu papel e dedicação. Nosso propósito neste alinhamento é tratar de um ponto específico sobre ${sit.theme}, para que possamos proteger nossos resultados e elevar sua performance com total respeito e parceria."`;
+        specificFact = `"Em relação ao episódio recente (*'${sit.rawExtract}'*), identifiquei impactos diretos que demandam nossa intervenção imediata. Gostaria de ouvir primeiramente: como você avalia esse cenário e os desdobramentos que ele gerou?"`;
+        specificAction = `"Conectando com o seu potencial e a sua virtude de ${peerInfo.virtue}, qual é a sua proposta prática para recalibrarmos isso imediatamente? Quero que definamos um pacto claro de acompanhamento a partir de hoje."`;
       }
 
       return `### 🎯 Roteiro de Feedback Executivo MasterMind
 
-**Líder em Ação:** Padrão-Master ${leaderInfo.id} (${leaderInfo.name}) • Virtude a manifestar: **${leaderInfo.virtue}**
-**Liderado / Interlocutor:** Padrão-Master ${peerInfo.id} (${peerInfo.name}) • Fixação a considerar: *${peerInfo.mentalFixation}*
-**Foco da Situação:** ${sitAnalysis.theme.toUpperCase()}
+**Líder em Ação:** Padrão-Master ${leaderInfo.id} (${leaderInfo.name}) • Virtude Farol: **${leaderInfo.virtue}**
+**Liderado / Interlocutor:** Padrão-Master ${peerInfo.id} (${peerInfo.name}) • Fixação a Considerar: *${peerInfo.mentalFixation}*
+**Contexto Operacional:** ${sit.theme.toUpperCase()}
 
 ---
 
-#### 1. Diagnóstico Relacional & Dinâmica dos Padrões no Caso Concreto:
-* **Seu Desafio como Líder (Padrão-Master ${leaderInfo.id}):** ${leaderInfo.feedbackAdviceAsLeader} Ao lidar com esta situação (*${sitAnalysis.theme}*), evite projetar seu vício de *${leaderInfo.emotionalVice}* e ancore sua autoridade na virtude da **${leaderInfo.virtue}**.
-* **Como o Liderado (Padrão-Master ${peerInfo.id}) processa este momento:** ${peerInfo.feedbackAdviceAsSubordinate}
+#### 🤝 1. Espelhamento & Conexão Inicial:
+${mirroring}
+
+---
+
+#### 🔍 2. Diagnóstico da Dinâmica Relacional dos Padrões-Master:
+* **Seu Desafio como Líder (Padrão-Master ${leaderInfo.id}):** ${leaderInfo.feedbackAdviceAsLeader} Ao conduzir este diálogo (*${sit.theme}*), evite projetar o vício de *${leaderInfo.emotionalVice}* e ancore sua presença na virtude da **${leaderInfo.virtue}**.
+* **Como o Interlocutor (Padrão-Master ${peerInfo.id}) processa este momento:** ${peerInfo.feedbackAdviceAsSubordinate}
 * **Gatilhos Emocionais a EVITAR TERMINANTEMENTE com o Padrão-Master ${peerInfo.id}:**
-  - ${peerInfo.communicationTriggersToAvoid[0] || "Acusações genéricas ou tom punitivo desproporcional"}
-  - ${peerInfo.communicationTriggersToAvoid[1] || "Ignorar o ponto de vista do liderado"}
-  - Não desqualifique o esforço dele diante do problema relatado (*${sitAnalysis.rawExtract.slice(0, 70)}...*).
+  - **1.** ${peerInfo.communicationTriggersToAvoid[0] || "Acusações genéricas ou tom inquisitivo/punitivo"}
+  - **2.** ${peerInfo.communicationTriggersToAvoid[1] || "Ignorar o ponto de vista ou os sentimentos do liderado"}
+  - **3.** Não minimize a percepção dele sobre o contexto (*${sit.rawExtract.slice(0, 60)}...*).
 
 ---
 
-#### 2. Roteiro Executivo de 3 Passos (Palavras Cirúrgicas Sugeridas):
+#### 🗣️ 3. Roteiro Executivo de 3 Passos (Palavras Cirúrgicas Sugeridas):
 
 1. **Abertura com Vínculo e Intenção Positiva (Rapport Estratégico):**
    > ${specificOpening}
 
-2. **Apresentação de Fatos Objetivos (Foco no Impacto Real, Sem Julgamento Moral):**
+2. **Apresentação de Fatos Objetivos (Sem Julgamento Moral, Foco no Impacto):**
    > ${specificFact}
 
 3. **Pacto de Ação & Compromisso Mútuo de Responsabilidade:**
@@ -295,123 +348,144 @@ function generateLocalMentorResponse(
 
 ---
 
-#### 3. Princípio de Alta Performance Napoleon Hill:
-> *"A cooperação voluntária não se obtém por imposição ou intimidação, mas pelo despertar do propósito nobre na mente do seu liderado."* — Napoleon Hill
+#### ⚡ 4. Desafio MasterMind de 24 Horas & Princípio Napoleon Hill:
+* **Desafio Prático:** ${customChallenge}
+* **Princípio da Lei do Triunfo:**
+  > ${customNapoleonQuote}
 
-Como você se sente com essa formulação para conduzir o alinhamento? Deseja ajustar algum detalhe prático da conversa?`;
+Como você se sente com essa formulação para conduzir o alinhamento? Deseja ajustar algum detalhe específico da conversa?`;
     }
 
     return `### 🎯 Assistente de Feedback Estratégico MasterMind
 
 Entendido, Líder **Padrão-Master ${leaderInfo.id} (${leaderInfo.name})**.
 
-Para que eu formule o roteiro de feedback sob medida com palavras exatas:
-1. **Qual é o Padrão-Master provável do seu liderado ou interlocutor (1 a 9)?**
-2. **Qual é a situação concreta que precisa ser alinhada?** *(Conte brevemente o ocorrido, impacto e o resultado esperado)*
+Para que eu formule o roteiro de feedback sob medida com palavras cirúrgicas:
+1. **Qual é o Padrão-Master provável do seu interlocutor (1 a 9)?**
+2. **Qual é a situação concreta que você precisa alinhar?** *(Descreva o que ocorreu, os impactos e o desfecho almejado)*
 
-*Assim que você indicar, entregarei o diagnóstico cirúrgico da relação e o roteiro completo.*`;
+*Assim que você indicar esses pontos, entregarei o diagnóstico relacional e o roteiro completo de comunicação.*`;
   }
 
+  // ==========================================
+  // PILAR 2: SOS INTELIGÊNCIA EMOCIONAL
+  // ==========================================
   if (pillarId === "sos") {
-    // Dynamic customization for SOS according to crisis type
+    let mirroring = "";
     let emergencyAction1 = leaderInfo.sosActions[0];
     let emergencyAction2 = leaderInfo.sosActions[1];
-    let contextGuidance = `Diante da pressão relatada (*'${sitAnalysis.rawExtract || "momento de alta turbulência"}'*), o seu Padrão-Master ${leaderInfo.id} tende a reagir ativando o vício de **${leaderInfo.emotionalVice}** e a fixação de *${leaderInfo.mentalFixation}*.`;
+    let customNapoleonQuote = `"O homem que não consegue controlar as suas próprias emoções jamais poderá controlar as circunstâncias ao seu redor." — Napoleon Hill`;
 
-    if (sitAnalysis.isConflict || sitAnalysis.isCrisis) {
-      emergencyAction1 = `**Pausa Tática de 5 Minutos Sem Reação Verbal:** Não tome decisões nem envie mensagens no calor da discussão. Declare: *"Vou analisar os dados com profundidade e retorno nosso posicionamento às [horário específico]"*.`;
-      emergencyAction2 = `**Separação entre Fato e Reação Emocional:** Anote em um papel: 1) O que é fato objetivo inegável? 2) O que é suposição da mente sob o filtro de ${leaderInfo.emotionalVice}? Responda apenas ao fato.`;
-    } else if (sitAnalysis.isError || sitAnalysis.isPerformance) {
-      emergencyAction1 = `**Desarme da Culpa e Foco em Solução Imediata:** Respire fundo e convoque sua virtude de **${leaderInfo.virtue}**. Pergunte à equipe: *"O fato aconteceu; agora, qual é o plano de contingência para os próximos 60 minutos?"*.`;
-      emergencyAction2 = `**Isolamento do Problema:** Não permita que o erro em uma área contamine sua autoconfiança no restante das operações do dia.`;
+    if (sit.isContractLossOrCrisis) {
+      mirroring = `Compreendo profundamente a tempestade emocional que uma perda de contrato ou crise de grande porte provoca. A sensação de peso nas costas, a preocupação imediata com o fluxo de caixa, a folha de pagamento e a reação do time são absolutamente naturais. Porém, agora é o momento exato em que a sua liderança será testada naquilo que Napoleon Hill chamava de 'Autodomínio Inabalável'.`;
+      emergencyAction1 = `**Contenção da Catastrofização Mental:** Respire fundo. Não fale com a equipe tomado pelo desespero. Escreva em uma folha: '1) Qual é o impacto real e mensurável hoje? 2) Quais são 3 ações imediatas de corte de despesas não essenciais ou aceleração de novos negócios?'`;
+      emergencyAction2 = `**Comunicação de Firmeza e Segurança:** Ao reunir o time, adote uma postura de general em campo: reconheça a perda com sobriedade, assuma o comando do plano de contingência e distribua metas claras para os próximos 7 dias.`;
+      customNapoleonQuote = `"Toda adversidade carrega dentro de si a semente de uma vantagem equivalente ou muito superior." — Napoleon Hill`;
+    } else if (sit.isConflict) {
+      mirroring = `Reconheço a intensidade e o calor desse atrito interpessoal. Quando o ego entra em combustão, a primeira vítima é o discernimento executivo. Agir no ápice da raiva ou da mágoa gerará feridas relacionais que demandarão meses para cicatrizar.`;
+      emergencyAction1 = `**Pausa Tática de 10 Minutos Sem Reação Verbal:** Não envie áudios, e-mails ou mensagens textuais agora. Declare: *"Vou analisar os fatos com a devida profundidade e retorno nosso alinhamento às [horário definido]"*.`;
+      emergencyAction2 = `**Desconexão de Reatividade:** Pergunte-se com rigor: 'Esta conversa é para alimentar o meu ego de ${leaderInfo.emotionalVice} ou para proteger o propósito maior da empresa?'`;
+    } else {
+      mirroring = `Compreendo o nível de pressão e exigência que este momento crítico está demandando de você (*'${sit.rawExtract}'*). A liderança de excelência não consiste na ausência de turbulências, mas na serenidade com que você comanda o leme durante a tempestade.`;
+      emergencyAction1 = `**Desarme da Culpa e Foco em Solução:** Convoque sua virtude de **${leaderInfo.virtue}** e pergunte: *"O fato está consumado; qual é o plano de contenção para os próximos 60 minutos?"*.`;
+      emergencyAction2 = `**Isolamento do Problema:** Não permita que uma falha operacional contamine a sua autoconfiança no restante das suas decisões de hoje.`;
     }
 
     return `### 🛡️ SOS Inteligência Emocional MasterMind
 
 **Líder em Comando:** Padrão-Master ${leaderInfo.id} (${leaderInfo.name} — ${leaderInfo.subtitle})
-**Gatilho Ativado:** ${sitAnalysis.theme.toUpperCase()}
-**Vício Emocional Sob Estresse:** **${leaderInfo.emotionalVice}**
+**Gatilho Identificado:** ${sit.theme.toUpperCase()}
+**Vício Emocional Ativado:** **${leaderInfo.emotionalVice}**
 **Virtude Mestra a Resgatar Imediatamente:** **${leaderInfo.virtue}**
 
 ---
 
-#### 🔍 Diagnóstico do Momento de Pressão:
-${contextGuidance}
-A mente executiva sob estresse tende a perder a visão panorâmica. Seu objetivo agora não é 'vencer a crise' no grito ou na pressa, mas recuperar seu centro de comando interno.
+#### 🤝 1. Acolhimento & Espelhamento da Pressão:
+${mirroring}
 
 ---
 
-#### 🚨 2 Ações Práticas Imediatas de Domínio Próprio:
+#### 🔍 2. Diagnóstico do Momento de Pressão:
+Diante do incidente relatado (*'${sit.rawExtract || "momento de alta turbulência"}'*), o seu Padrão-Master ${leaderInfo.id} tende a reagir ativando a fixação de *${leaderInfo.mentalFixation}*. A mente sob estresse perde a visão panorâmica. Seu objetivo agora é resgatar o centro de gravidade interno antes de emitir qualquer ordem.
+
+---
+
+#### 🚨 3. Duas Ações Práticas Imediatas de Autodomínio:
 1. ${emergencyAction1}
 2. ${emergencyAction2}
 
 ---
 
-#### 💡 Atitude Mental de Cura Napoleon Hill:
+#### 💡 4. Atitude Mental de Cura Napoleon Hill:
 > *"${leaderInfo.healingAttitude}"*
 
 ---
 
-#### 🌬️ Exercício de Centralização Fisiológica (Técnica 4-2-6):
-* **Inspire pelo nariz em 4 segundos:** Conecte-se com a virtude da **${leaderInfo.virtue}** e clareza mental.
-* **Retenha o ar por 2 segundos:** Afirme internamente sua soberania e autodomínio executivo.
-* **Expire suavemente pela boca em 6 segundos:** Expulse a tensão, a pressa e a reatividade de *${leaderInfo.emotionalVice}*.
+#### 🌬️ 5. Exercício de Centralização Fisiológica (Técnica 4-2-6):
+* **Inspire pelo nariz em 4 segundos:** Conecte-se com a virtude da **${leaderInfo.virtue}** e clareza executiva.
+* **Retenha o ar por 2 segundos:** Afirme internamente sua soberania e equilíbrio emocional.
+* **Expire suavemente pela boca em 6 segundos:** Expulse a tensão, o desespero e a reatividade de *${leaderInfo.emotionalVice}*.
 
-> *"O homem que não consegue controlar as suas próprias emoções jamais poderá controlar as circunstâncias ao seu redor."* — Napoleon Hill
+> ${customNapoleonQuote}
 
-Como você sente seu nível de serenidade e clareza agora para dar o próximo passo?`;
+Como você percebe a sua serenidade e foco agora para dar o próximo direcionamento com sabedoria?`;
   }
 
+  // ==========================================
   // PILAR 3: BÚSSOLA DIÁRIA DE VIRTUDES
-  const lowerMsg = (lastUserMsg + " " + conversationText).toLowerCase();
+  // ==========================================
   let activityContextSection = "";
+  let specificChallenge = `Diante do seu compromisso (*${lastUserMsg.slice(0, 110) || "suas principais decisões e reuniões do dia"}*), tome a decisão deliberada de agir pela virtude de **${leaderInfo.virtue}**, gerando uma aliança MasterMind exemplar.`;
 
-  if (lowerMsg.includes("bni") || lowerMsg.includes("business network")) {
-    activityContextSection = `#### 🌐 Contexto Estratégico da Atividade: Reunião do BNI (Business Network International)
-* **A Dinâmica do BNI:** O BNI é a maior organização de networking profissional e referências qualificadas de negócios do mundo. Sua premissa fundamental é a filosofia **"Givers Gain" (Ganhar Conquistando / Doar para Receber)**.
-* **Momentos Críticos na Reunião:** O pitch de apresentação semanal (30 a 60 segundos), a postura executiva impecável, a pontualidade rigorosa e a geração de referências confiáveis.
+  if (sit.isBNI) {
+    activityContextSection = `#### 🌐 Contexto Estratégico: Reunião do BNI (Business Network International)
+* **A Dinâmica do BNI:** O BNI baseia-se na filosofia **"Givers Gain" (Ganhar Doando / Contribuir para Receber)**. O pitch semanal de 30 a 60 segundos exige síntese, clareza cirúrgica e um pedido de referência extremamente específico.
 * **Aplicação ao seu Padrão-Master ${leaderInfo.id} (${leaderInfo.name}):** ${
       leaderInfo.id === 7
-        ? "Como Entusiasta (Padrão-Master 7), seu magnetismo, simpatia e energia são pontos fortíssimos no networking. Todavia, o perigo é a dispersão de ideias ou tentar vender produtos múltiplos no seu pitch de 30s. Aplique a virtude da **Sobriedade e Foco**: escolha UMA única especialidade, seja cirúrgico no pedido de referência específica e transmita solidez inabalável aos membros do grupo."
+        ? "Como Entusiasta (Padrão-Master 7), seu magnetismo é contagiante, mas o risco é tentar falar de tudo e perder o foco. Aplique a virtude da **Sobriedade e Foco**: apresente um único case específico e faça um pedido claro de conexão."
         : leaderInfo.id === 3
-        ? "Como Realizador (Padrão-Master 3), seu pitch é naturalmente polido e eficiente. O risco é soar puramente transacional. Conecte-se genuinamente com o valor e a ajuda que você pode levar aos outros membros do grupo."
+        ? "Como Realizador (Padrão-Master 3), seu pitch é impecável. Cuide para não soar puramente transacional; demonstre como seu trabalho resolve a dor dos clientes dos seus parceiros de grupo."
         : leaderInfo.id === 8
-        ? "Como Desafiador (Padrão-Master 8), sua presença transmite autoridade e liderança imediata. Cuide para que sua postura firme não intimide membros novos; mostre-se como um parceiro leal e protetor de novos negócios."
+        ? "Como Desafiador (Padrão-Master 8), sua presença impõe autoridade. Use sua força para transmitir confiabilidade e proteção aos negócios dos outros membros."
         : leaderInfo.id === 1
-        ? "Como Perfeccionista (Padrão-Master 1), sua credibilidade e pontualidade são exemplares. Cuidado para não julgar mentalmente o pitch imperfeito dos colegas; use a virtude da **Serenidade** para acolher e gerar pontes de negócios."
-        : `Utilize a virtude mestra de **${leaderInfo.virtue}** para posicionar sua autoridade e criar alianças de alto valor no grupo.`
+        ? "Como Perfeccionista (Padrão-Master 1), sua credibilidade é máxima. Pratique a virtude da **Serenidade** para acolher e gerar conexões empáticas sem exigir perfeição formal dos outros membros."
+        : `Utilize a virtude de **${leaderInfo.virtue}** para posicionar sua autoridade e criar alianças de alto valor.`
     }
 
 ---
 `;
-  } else if (lowerMsg.includes("1on1") || lowerMsg.includes("um a um") || lowerMsg.includes("alinhamento individual")) {
-    activityContextSection = `#### 👥 Contexto Estratégico da Atividade: Reunião 1on1
-* **A Dinâmica Executiva do 1on1:** O 1on1 não é uma prestação de contas burocrática, mas um espaço nobre de escuta ativa, desenvolvimento de liderados e remoção de barreiras operacionais.
-* **Aplicação ao seu Padrão-Master ${leaderInfo.id}:** Pratique a virtude de **${leaderInfo.virtue}**. Fale menos e ouça com atenção plena, buscando compreender os anseios do liderado antes de orientar.
+    specificChallenge = `No seu pitch de negócios e nas conversas 1a1 do BNI de hoje, aplique a virtude da **${leaderInfo.virtue}**, ouvindo com atenção genuína como você pode gerar referências qualificadas para outros parceiros antes de pedir referências para si.`;
+  } else if (sit.isChangeManagement) {
+    activityContextSection = `#### 🔄 Contexto Estratégico: Treinamento de Gestão da Mudança
+* **A Dinâmica da Transformação:** A resistência humana ao novo é quebrada pelo propósito inspirador e pela escuta empática, não pela imposição burocrática.
+* **Aplicação ao seu Padrão-Master ${leaderInfo.id}:** Utilize a virtude de **${leaderInfo.virtue}** para acolher os receios do grupo e conduzi-los com segurança e entusiasmo sereno.
 
 ---
 `;
-  } else if (lowerMsg.includes("diretoria") || lowerMsg.includes("conselho") || lowerMsg.includes("board")) {
-    activityContextSection = `#### 🏛️ Contexto Estratégico da Atividade: Reunião de Diretoria / Conselho
-* **A Dinâmica Executiva:** O conselho e a diretoria demandam síntese estratégica, clareza numérica de indicadores, governança e alinhamento de longo prazo.
-* **Aplicação ao seu Padrão-Master ${leaderInfo.id}:** Utilize a virtude de **${leaderInfo.virtue}** para sustentar posicionamentos firmes sem cair na reatividade de *${leaderInfo.emotionalVice}*.
+    specificChallenge = `Na abertura da sua condução, dedique os primeiros 10 minutos para validar os sentimentos da equipe diante da mudança, garantindo que todos se sintam ouvidos antes de apresentar o novo fluxo.`;
+  } else if (sit.isFamilyFinances) {
+    activityContextSection = `#### 🏡 Contexto Estratégico: Alinhamento de Finanças Familiares
+* **A Dinâmica no Casamento:** As finanças familiares exigem comunhão de valores, respeito mútuo e clareza de longo prazo, eliminando o tom de auditoria ou acusação.
+* **Aplicação ao seu Padrão-Master ${leaderInfo.id}:** Utilize a virtude de **${leaderInfo.virtue}** para construir um pacto de prosperidade a dois com leveza e carinho.
 
 ---
 `;
-  } else if (lowerMsg.includes("negocia") || lowerMsg.includes("venda") || lowerMsg.includes("proposta")) {
-    activityContextSection = `#### 💼 Contexto Estratégico da Atividade: Negociação Comercial / Apresentação de Proposta
-* **A Dinâmica Executiva:** Negociações de alto valor exigem identificação das reais dores do cliente, geração de valor mútuo e firmeza de condições.
-* **Aplicação ao seu Padrão-Master ${leaderInfo.id}:** Ancore-se na virtude de **${leaderInfo.virtue}** para manter a serenidade e conduzir a negociação para um pacto Ganha-Ganha exemplar.
+    specificChallenge = `Realizar um alinhamento sereno com seu cônjuge com foco exclusivo nos projetos e sonhos da família para os próximos 12 meses, acordando um orçamento compartilhado sem cobranças de erros passados.`;
+  } else if (sit.isOneOnOne) {
+    activityContextSection = `#### 👥 Contexto Estratégico: Reunião 1on1
+* **A Dinâmica Executiva:** Espaço sagrado de escuta ativa profunda (80% liderado, 20% líder) para remover impedimentos e inspirar desenvolvimento.
+* **Aplicação ao seu Padrão-Master ${leaderInfo.id}:** Pratique a virtude de **${leaderInfo.virtue}**, oferecendo presença plena e suporte genuíno.
 
 ---
 `;
+    specificChallenge = `Conduzir o 1on1 fazendo pelo menos 3 perguntas abertas de reflexão ('Qual foi seu maior aprendizado nesta semana?', 'Onde posso te apoiar para desbloquear seus resultados?') sem interromper o liderado.`;
   }
 
   return `### 🧭 Bússola Diária de Virtudes MasterMind
 
 **Líder Padrão-Master ${leaderInfo.id}:** ${leaderInfo.name} (${leaderInfo.subtitle})
 **Virtude Farol do Dia:** **${leaderInfo.virtue}**
-**Armadilha Comportamental a Neutralizar:** *${leaderInfo.mentalFixation}* (${leaderInfo.emotionalVice})
+**Armadilha a Neutralizar:** *${leaderInfo.mentalFixation}* (${leaderInfo.emotionalVice})
 
 ---
 
@@ -422,7 +496,7 @@ ${activityContextSection}#### 📜 Pílula de Sabedoria Estratégica Napoleon Hi
 
 #### ⚡ Desafio Prático de Liderança de 24 Horas:
 * **Foco da Missão:** ${leaderInfo.turningPoint}
-* **Aplicação na sua Agenda de Hoje:** Diante do seu compromisso (*${lastUserMsg.slice(0, 110) || "suas principais decisões e reuniões do dia"}*), tome a decisão deliberada de agir pela virtude de **${leaderInfo.virtue}**. Ao se deparar com imprevistos ou tentações de agir por impulso, faça uma pausa de 3 segundos e conduza com a maestria de um líder MasterMind.
+* **Aplicação na sua Agenda de Hoje:** ${specificChallenge}
 
 ---
 
@@ -506,18 +580,19 @@ DIRETRIZ DE EXECUÇÃO EXCLUSIVA:
     let responseText = "";
     let webSources: Array<{ title: string; uri: string }> = [];
 
-    // Primary model: gemini-3.7-flash with thinking for high-level executive depth
+    // Try primary high-performance model (gemini-2.5-flash) with Google Search grounding tool
     try {
       const response = await generateWithTimeout(
         ai.models.generateContent({
-          model: "gemini-3.7-flash",
+          model: "gemini-2.5-flash",
           contents,
           config: {
             systemInstruction,
             temperature: 0.7,
+            tools: [{ googleSearch: {} }],
           },
         }),
-        30000
+        35000
       );
       responseText = response.text || "";
       const searchChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
@@ -531,9 +606,25 @@ DIRETRIZ DE EXECUÇÃO EXCLUSIVA:
           }
         }
       }
-    } catch (modelErr: any) {
-      console.log("Primary model notice, using tailored local MasterMind engine:", modelErr?.message || modelErr);
-      responseText = generateLocalMentorResponse(pillarId, messages, userEnneatype, peerEnneatype);
+    } catch (primaryErr: any) {
+      console.log("Primary model with search failed, trying fallback model (gemini-3.8-flash):", primaryErr?.message || primaryErr);
+      try {
+        const fallbackAiResponse = await generateWithTimeout(
+          ai.models.generateContent({
+            model: "gemini-3.8-flash",
+            contents,
+            config: {
+              systemInstruction,
+              temperature: 0.7,
+            },
+          }),
+          30000
+        );
+        responseText = fallbackAiResponse.text || "";
+      } catch (secErr: any) {
+        console.log("Fallback AI model error, using hyper-personalized MasterMind engine:", secErr?.message || secErr);
+        responseText = generateLocalMentorResponse(pillarId, messages, userEnneatype, peerEnneatype);
+      }
     }
 
     if (!responseText) {

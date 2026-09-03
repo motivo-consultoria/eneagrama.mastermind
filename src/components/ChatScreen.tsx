@@ -144,7 +144,7 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
   const handleSelectUserType = (typeNum: number) => {
     setUserEnneatype(typeNum);
     const typeInfo = ENNEAGRAM_TYPES[typeNum];
-    const userMsgText = `Meu padrão é o Tipo ${typeNum} (${typeInfo.name} - ${typeInfo.subtitle}).`;
+    const userMsgText = `Meu padrão é o Padrão-Master ${typeNum} (${typeInfo.name} - ${typeInfo.subtitle}).`;
 
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -159,7 +159,7 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
       const mentorPrompt: ChatMessage = {
         id: `mentor-${Date.now() + 1}`,
         role: "assistant",
-        content: `Excelente. Registrado: **Seu Padrão é o Tipo ${typeNum} (${typeInfo.name})** — virtude mestra da *${typeInfo.virtue}*.\n\nAgora, vamos ao segundo passo: **Qual é o Eneatipo do liderado ou da outra pessoa envolvida na conversa?**\n*Selecione uma das opções abaixo:*`,
+        content: `Excelente. Registrado: **Seu perfil é o Padrão-Master ${typeNum} (${typeInfo.name})** — com a virtude mestra da *${typeInfo.virtue}*.\n\nAgora, vamos ao segundo passo: **Qual é o Padrão-Master do seu liderado ou da outra pessoa envolvida na conversa?**\n*Selecione uma das opções abaixo:*`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, userMsg, mentorPrompt]);
@@ -169,7 +169,7 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
       const mentorPrompt: ChatMessage = {
         id: `mentor-${Date.now() + 1}`,
         role: "assistant",
-        content: `Compreendido, líder Padrão ${typeNum} (${typeInfo.name}). Em momentos de alta pressão, seu desafio central é não ceder ao vício emocional do *${typeInfo.emotionalVice}*.\n\n**O que aconteceu especificamente que tirou você do eixo ou gerou esse estresse neste momento?**\n*Digite abaixo para receber as 2 ações práticas imediatas de domínio próprio.*`,
+        content: `Compreendido, líder Padrão-Master ${typeNum} (${typeInfo.name}). Em momentos de alta pressão e estresse agudo, seu desafio central é neutralizar a tentação do *${typeInfo.emotionalVice}* e resgatar a *${typeInfo.virtue}*.\n\n**O que aconteceu especificamente que tirou você do eixo, gerou tensão ou exige autodomínio imediato?**\n*Descreva o fato ou contexto abaixo:*`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, userMsg, mentorPrompt]);
@@ -180,7 +180,7 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
       const mentorPrompt: ChatMessage = {
         id: `mentor-${Date.now() + 1}`,
         role: "assistant",
-        content: `Perfeito, líder Padrão ${typeNum} (${typeInfo.name}). Sua bússola hoje aponta diretamente para a virtude da *${typeInfo.virtue}*.\n\n**Qual é a sua principal reunião, decisão ou desafio executivo do dia de hoje?**\n*Digite abaixo para receber sua pílula de sabedoria e o desafio de 24h.*`,
+        content: `Perfeito, líder Padrão-Master ${typeNum} (${typeInfo.name}). Sua bússola hoje aponta diretamente para a virtude da *${typeInfo.virtue}*.\n\n**Qual é a sua principal reunião, decisão executiva ou desafio do dia de hoje?**\n*Descreva a atividade, evento ou compromisso abaixo para calibrarmos sua sabedoria e o desafio prático de 24h:*`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, userMsg, mentorPrompt]);
@@ -193,7 +193,7 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
     setPeerEnneatype(typeNum);
     setStage("free_text");
     const peerInfo = ENNEAGRAM_TYPES[typeNum];
-    const userMsgText = `O liderado/pessoa envolvida é Tipo ${typeNum} (${peerInfo.name} - ${peerInfo.subtitle}).`;
+    const userMsgText = `O liderado/pessoa envolvida é Padrão-Master ${typeNum} (${peerInfo.name} - ${peerInfo.subtitle}).`;
 
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -205,7 +205,7 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({
     const mentorPrompt: ChatMessage = {
       id: `mentor-${Date.now() + 1}`,
       role: "assistant",
-      content: `Entendido. Temos a dinâmica entre **Líder Tipo ${userEnneatype}** e **Liderado Tipo ${typeNum} (${peerInfo.name})**.\n\nPara calibrarmos o roteiro executivo com palavras exatas e gatilhos a evitar: **Qual é a situação concreta que precisa de alinhamento ou feedback?**\n*Descreva o fato ou comportamento abaixo:*`,
+      content: `Entendido. Temos a dinâmica entre **Líder Padrão-Master ${userEnneatype}** e **Liderado Padrão-Master ${typeNum} (${peerInfo.name})**.\n\nPara que eu formule um roteiro cirúrgico com conexão genuína, palavras exatas e gatilhos a evitar: **Qual é a situação concreta que precisa de alinhamento ou feedback?**\n*Descreva o fato ocorrido, o impacto e o que você busca alcançar:*`,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 

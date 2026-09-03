@@ -36,8 +36,8 @@ export default function App() {
     const matches = Array.from(allText.matchAll(/(?:eneatipo|padr[ãa]o|tipo)\s*([1-9])/gi));
     const uniqueTypes = Array.from(new Set(matches.map((m) => m[1])));
     const enneatypesDetected = uniqueTypes.length > 0 
-      ? `Eneatipo(s): ${uniqueTypes.join(", ")}` 
-      : "Eneagrama Vitruviano";
+      ? `Padrão-Master: ${uniqueTypes.join(", ")}` 
+      : "Padrão-Master Vitruviano";
 
     try {
       const response = await fetch("/api/summary", {
